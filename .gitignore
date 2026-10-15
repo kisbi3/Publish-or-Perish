@@ -1,0 +1,20 @@
+# OS / System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Obsidian Vault Settings (if opened as separate vault)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/appearance.json
+.trash/
+
+# Editors & IDE
+.vscode/
+.idea/
+
+# Temporary / Backup files
+*.tmp
+*.bak
+*~
