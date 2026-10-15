@@ -7,10 +7,10 @@
 ## 운영 방식
 
 - **기간 및 빈도:** 종료 기한 없음. 필요하면 일주일에 여러 번 진행
-- **발표:** 매 세션 한 명이 맡고, 발표자는 두 사람이 번갈아 맡는 것을 기본으로 함
-- **분량:** 한 번에 교재 **1~2개 Chapter**를 목표로 하되, 내용이 길거나 어려우면 Section 단위로 조정
+- **발표:** 한 번의 미팅(Session)에서 **두 사람이 각자 한 번씩 발표**합니다. 한 사람이 발표하는 동안 다른 사람은 질문하고 토론합니다.
+- **분량:** **각 발표자별로** 교재 1~2개 Chapter를 목표로 하되, 내용이 길거나 어려우면 Section 단위로 조정합니다.
 - **방식:** 핵심 개념, 정리와 증명, 예제, 토론을 중심으로 진행
-- **기록:** 세션이 끝난 뒤 날짜·발표자·진도·핵심 내용·미해결 질문을 기록
+- **기록:** 세션 디렉토리의 `README.md`에는 미팅 정보·발표 링크·공동 토론을, 두 발표 파일에는 각자의 발표 내용과 증명을 기록합니다.
 - **별도 연구 프로젝트:** 없음. 실습이나 연습문제는 필요에 따라 자율적으로 진행
 
 ## Curriculum
@@ -27,57 +27,55 @@
 
 ## 세션 기록 방법
 
-모든 발표는 **Markdown 문서 하나**로 준비하고 진행합니다. 별도의 슬라이드나 PDF 발표 자료는 필수가 아닙니다.
+**Session은 두 사람이 함께 진행하는 미팅 한 번**, **Presentation은 그 안에서 각 사람이 맡는 발표 한 번**을 뜻합니다.
 
-1. 주제 폴더 안에 `Session-01/`, `Session-02/`처럼 **세션별 디렉토리**를 만듭니다.
-2. 그 안에 `README.md`를 작성합니다. [SESSION_TEMPLATE.md](./SESSION_TEMPLATE.md)를 복사해 시작하면 편리합니다.
-3. 날짜·발표자·교재 Chapter/Section과 개념·증명·토론·미해결 질문을 기록합니다. 고정된 진도나 일정은 없습니다.
-4. 과목별 `README.md`에 해당 세션의 디렉토리 링크(`./Session-XX/`)를 추가합니다.
-5. 세션 번호는 **각 과목별**로 부여하며, 주차 및 날짜와는 무관합니다.
+1. 실제 미팅을 준비할 때 과목 폴더에 `Session-XX/`를 만듭니다. (과목별로 번호를 매김)
+2. [SESSION_TEMPLATE.md](./SESSION_TEMPLATE.md)를 `Session-XX/README.md`로 복사해 **미팅 개요와 두 발표 링크**를 작성합니다.
+3. [PRESENTATION_TEMPLATE.md](./PRESENTATION_TEMPLATE.md)를 각각 `01-Presenter-A.md`, `02-Presenter-B.md`로 복사합니다. 발표자는 **각자 자기 파일**에서 Markdown과 LaTeX 수식으로 내용을 정리하고 그 문서로 발표합니다.
+4. 미팅이 끝나면 `Session-XX/README.md`의 **Discussion / Open Questions**에 함께 논의한 사항을 기록합니다.
+5. 과목별 `README.md`의 Sessions 목록에 해당 미팅 링크(`./Session-XX/`)를 추가합니다.
 
-첫 Linear Algebra 세션만 `Session-01/README.md`로 미리 준비되어 있습니다. 새 세션과 관련 폴더는 필요할 때 추가합니다.
+발표자 A·B는 파일 구분용으로 사용한 임시 이름입니다. 실제 이름이나 GitHub 아이디에 맞춰 변경해도 됩니다. 순서나 학습 기간은 고정하지 않으며, 발표 분량은 **각자 1~2 Chapter를 기본으로 유연하게** 조절합니다.
 
 ```text
 Publish-or-Perish/
-├── README.md
-├── SESSION_TEMPLATE.md
+├── README.md                      # 스터디 전체 소개
+├── SESSION_TEMPLATE.md            # 미팅 개요 템플릿
+├── PRESENTATION_TEMPLATE.md       # 개인 발표 문서 템플릿
 ├── 01. Linear Algebra/
-│   ├── README.md                   # 과목 소개 · 세션 목차 · 공통 참고 링크
-│   ├── Session-01/
-│   │   └── README.md               # 발표 원고 및 스터디 기록
-│   └── Session-02/                 # 실제 다음 세션을 진행할 때 생성
-│       ├── README.md
-│       └── attachments/            # 필요한 경우에만 생성
-│           └── example.png
+│   ├── README.md                  # 과목 개요와 미팅 목록
+│   └── Session-01/
+│       ├── README.md              # 미팅 날짜·발표 링크·공동 토론
+│       ├── 01-Presenter-A.md       # 첫 번째 발표자 원고
+│       └── 02-Presenter-B.md       # 두 번째 발표자 원고
 ├── 02. Stochastic Processes/
 │   └── README.md
 ├── 03. Nonlinear Dynamics/
 │   └── README.md
 ├── 04. Complexity & Criticality/
 │   └── README.md
-├── 05. Information Theory & Inference/
-│   └── README.md
-└── .gitignore
+└── 05. Information Theory & Inference/
+    └── README.md
 ```
 
-> 위 트리의 `Session-02/`와 `attachments/`는 **구조 예시**입니다. 실제 저장소에는 필요한 시점에 생성합니다.
+위 구조에서는 진행 예정인 첫 미팅만 미리 만들어두었고, 다음 세션 폴더는 실제 준비할 때 생성합니다.
 
 ## 자료와 링크 관리
 
-- **정의·정리·증명:** `Session-XX/README.md`에 Markdown 및 LaTeX로 직접 작성합니다.
-- **수식 그림·직접 만든 그래프·필기 이미지:** 세션에 파일이 필요한 경우에만 `Session-XX/attachments/`를 만듭니다. 미리 빈 디렉토리를 만들지 않습니다.
-- **외부 논문·강의·교재·영상:** 가능하면 DOI, arXiv, 저자·출판사·공식 강의 페이지의 **링크**로 남깁니다. 저작권이 있는 교재 파일은 업로드하지 않습니다.
-- **공통 자료:** 여러 세션에서 반복 사용하는 참고 링크는 과목별 `README.md`의 `References`에 모읍니다.
-- **현재 설정:** `.gitignore`는 PDF/DJVU/EPUB 파일의 기본 업로드를 제외합니다. 별도 합법적 자료의 PDF가 필요하면 이 규칙을 검토하세요.
+- **정의·정리·증명:** 두 사람의 발표 파일(`01-Presenter-A.md`, `02-Presenter-B.md`)에 Markdown과 LaTeX로 직접 작성합니다.
+- **이미지 및 직접 만든 그래프:** 필요할 때만 해당 `Session-XX/attachments/`를 만듭니다. 공통으로 사용할 이미지도 같은 미팅 폴더에 둘 수 있습니다.
+- **외부 논문·강의·교재·영상:** 원본 파일 대신 가능한 한 DOI, arXiv, 저자·출판사·공식 사이트의 링크를 사용합니다.
+- **공통 참고 자료:** 여러 미팅에서 공유할 자료 링크는 과목별 `README.md`의 `References`에 모읍니다.
+- **현재 설정:** `.gitignore`는 PDF 등 일부 교재·문서 확장자를 기본적으로 제외하므로, 합법적으로 공유할 파일을 추가할 때도 규칙을 확인합니다.
 
-예를 들어 세션 디렉토리의 `README.md` 안에서는 다음처럼 그림과 외부 자료를 연결할 수 있습니다.
+발표 파일에서 이미지와 논문을 연결하는 예시입니다.
 
 ```markdown
-![직접 제작한 그림](attachments/figure.png)
+![직접 그린 그림](attachments/example.png)
 [참고 논문](https://doi.org/...)
 ```
 
-수식은 GitHub Markdown의 `$...$` 및 `$$...$$` 문법을 사용합니다.
+수식은 GitHub Markdown의 `$...$` 및 `$$...$$` 문법을 사용합니다. 별도의 슬라이드 파일은 필요하지 않습니다.
 
 ## 공동 작업
 

@@ -3,16 +3,19 @@
 - **주교재:** Friedberg, Linear Algebra
 - **주요 내용:** 벡터공간, 선형변환, 고윳값과 고유벡터, 스펙트럼 정리, SVD, 조르당 표준형
 - **일정:** 고정 기간 및 주차별 분량 없음
-- **진행:** 세션당 한 명 발표, 1~2 Chapter를 기본으로 필요시 조정
+- **진행:** 미팅(Session)마다 두 사람이 각각 발표하며, 발표자당 1~2 Chapter를 기본으로 필요시 조정
 
 ## Sessions
 
-- [Session 01](./Session-01/) — 진행 전 준비용 노트
+- [Session 01](./Session-01/) — 두 명의 발표 문서 준비 중
 
-이후 세션은 실제로 진행할 때마다 `Session-02/README.md`, `Session-03/README.md`처럼 추가합니다.
-기록 양식은 [공통 템플릿](../SESSION_TEMPLATE.md)을 사용합니다.
+미팅마다 `Session-XX/` 폴더를 만들고, 아래 세 가지 문서를 기록합니다.
 
-세션별 발표 노트는 각 `Session-XX/README.md`에 작성합니다. 세션 고유의 이미지나 자료가 있을 때만 그 안에 `attachments/`를 만들고, 외부 자료는 링크로 연결합니다.
+- `Session-XX/README.md`: 미팅 개요, 두 발표 링크, 공동 토론과 미해결 질문
+- `Session-XX/01-Presenter-A.md`: 첫 번째 발표자의 Markdown 노트
+- `Session-XX/02-Presenter-B.md`: 두 번째 발표자의 Markdown 노트
+
+새 미팅은 [SESSION_TEMPLATE.md](../SESSION_TEMPLATE.md), 각 발표는 [PRESENTATION_TEMPLATE.md](../PRESENTATION_TEMPLATE.md)를 복사해 시작합니다. `attachments/`는 그림이나 파일이 필요할 때만 해당 미팅 폴더에 만들고, 외부 자료는 링크로 연결합니다.
 
 ## References
 

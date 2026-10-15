@@ -1,27 +1,25 @@
-# Session 01 — Linear Algebra
+# Session XX — Linear Algebra
 
 - **Date:**
-- **Presenter:**
 - **Textbook:** Friedberg, Linear Algebra
+
+## Presentations
+
+### 1. Presenter A
+- **Presenter:**
 - **Chapters / Sections:**
+- [Presentation Notes](./01-Presenter-A.md)
 
-## 1. Definitions & Concepts
-- 
+### 2. Presenter B
+- **Presenter:**
+- **Chapters / Sections:**
+- [Presentation Notes](./02-Presenter-B.md)
 
-## 2. Theorems & Proofs
-- 
+## Discussion
+-
 
-## 3. Examples & Exercises
-- 
+## Open Questions
+-
 
-## 4. Discussion & Questions
-- 
-
-## 5. Open Questions
-- 
-
-## 6. References (Optional)
-- 
-
-
-<!-- 이미지는 필요할 때만 attachments/를 만들고 상대 경로로 연결합니다. 외부 자료는 URL/DOI/arXiv 링크를 사용합니다. -->
+<!-- 발표 노트는 각자 별도의 .md 파일에 작성합니다.
+     공통 이미지는 필요할 때만 이 디렉토리에 attachments/를 만들어 보관합니다. -->
