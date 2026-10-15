@@ -7,10 +7,12 @@
 
 ## Sessions
 
-아직 진행한 세션이 없습니다. 첫 세션을 진행할 때 `Session-01.md`를 만듭니다.
+아직 진행한 세션이 없습니다. 첫 세션을 진행할 때 `Session-01/README.md`를 만듭니다.
 
-이후 세션은 실제로 진행할 때마다 `Session-02.md`, `Session-03.md`처럼 추가합니다.
+이후 세션은 실제로 진행할 때마다 `Session-02/README.md`, `Session-03/README.md`처럼 추가합니다.
 기록 양식은 [공통 템플릿](../SESSION_TEMPLATE.md)을 사용합니다.
+
+세션별 발표 노트는 각 `Session-XX/README.md`에 작성합니다. 세션 고유의 이미지나 자료가 있을 때만 그 안에 `attachments/`를 만들고, 외부 자료는 링크로 연결합니다.
 
 ## References
 
