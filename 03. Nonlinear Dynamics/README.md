@@ -1,4 +1,4 @@
-# Nonlinear Dynamics
+﻿# Nonlinear Dynamics
 
 - **주교재:** Strogatz, Nonlinear Dynamics and Chaos
 - **주요 내용:** Fixed points, stability, bifurcations, limit cycles, chaos
@@ -14,4 +14,7 @@
 
 ## References
 
-필요한 공개 자료와 참고 링크를 여기에 추가합니다.
+- **주교재:** Steven H. Strogatz, *Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering* (CRC Press / Westview)
+- **오픈 코스웨어 및 보완 자료:**
+  - [Steven Strogatz 코넬대 공식 강의 영상 (Cornell University / YouTube)](https://www.youtube.com/playlist?list=PLbN57C5Zdl6j_qJA-pYRChJymFsboNW48) (교재 저자의 직강 전편)
+  - [MIT OCW 18.385J — Nonlinear Dynamics and Chaos](https://ocw.mit.edu/courses/18-385j-nonlinear-dynamics-and-chaos-fall-2014/) (강의 노트 및 과제)

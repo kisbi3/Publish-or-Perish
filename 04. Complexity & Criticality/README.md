@@ -1,4 +1,4 @@
-# Complexity & Criticality
+﻿# Complexity & Criticality
 
 - **주교재:** Christensen & Moloney, Complexity and Criticality
 - **주요 내용:** Scaling, universality, percolation, self-organized criticality
@@ -14,4 +14,7 @@
 
 ## References
 
-필요한 공개 자료와 참고 링크를 여기에 추가합니다.
+- **주교재:** Kim Christensen & Nicholas R. Moloney, *Complexity and Criticality* (Imperial College Press / World Scientific)
+- **오픈 코스웨어 및 보완 자료:**
+  - [Complexity Explorer (Santa Fe Institute)](https://www.complexityexplorer.org/) (복잡계, 프랙탈, 스케일링 온라인 강좌)
+  - [Kim Christensen's Research & Publications (Imperial College London)](https://www.imperial.ac.uk/people/k.christensen) (SOC 및 복잡계 논문 모음)

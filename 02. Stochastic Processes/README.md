@@ -1,4 +1,4 @@
-# Stochastic Processes
+﻿# Stochastic Processes
 
 - **주교재:** Gardiner, Stochastic Methods
 - **주요 내용:** Markov process, master equation, Langevin equation, Fokker–Planck equation
@@ -14,4 +14,7 @@
 
 ## References
 
-필요한 공개 자료와 참고 링크를 여기에 추가합니다.
+- **주교재:** Crispin Gardiner, *Stochastic Methods: A Handbook for the Natural and Social Sciences* (Springer)
+- **오픈 코스웨어 및 보완 자료:**
+  - [David Tong: Lectures on Kinetic Theory (Cambridge University)](https://www.damtp.cam.ac.uk/user/tong/kinetic.html) (Brownian Motion, Langevin & Fokker-Planck 방정식 파트)
+  - [MIT OCW 8.044 — Statistical Physics I](https://ocw.mit.edu/courses/8-044-statistical-physics-i-spring-2013/) (확률 및 브라운 운동 물리 기초)

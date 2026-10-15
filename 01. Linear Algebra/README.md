@@ -1,4 +1,4 @@
-# Linear Algebra
+﻿# Linear Algebra
 
 - **주교재:** Friedberg, Linear Algebra
 - **주요 내용:** 벡터공간, 선형변환, 고윳값과 고유벡터, 스펙트럼 정리, SVD, 조르당 표준형
@@ -14,4 +14,8 @@
 
 ## References
 
-필요한 공개 자료와 참고 링크를 여기에 추가합니다.
+- **주교재:** Stephen H. Friedberg, Arnold J. Insel, Lawrence E. Spence, *Linear Algebra* (Pearson)
+- **오픈 코스웨어 및 보완 자료:**
+  - [MIT OCW 18.06SC — Linear Algebra](https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/) (Gilbert Strang 교수 강의 및 상세 노트)
+  - [3Blue1Brown — Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) (선형변환, 고유값의 기하학적 직관)
+  - Sheldon Axler, [*Linear Algebra Done Right*](https://linear.axler.net/) (행렬식 없는 연산자 중심 접근)
