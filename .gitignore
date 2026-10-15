@@ -5,10 +5,24 @@ Thumbs.db
 desktop.ini
 $RECYCLE.BIN/
 
-# Textbooks & Documents (local view only in Obsidian)
+# Textbooks, E-books & Documents (local view only in Obsidian)
 *.pdf
+*.PDF
 *.djvu
+*.DJVU
 *.epub
+*.EPUB
+*.mobi
+*.azw3
+*.cbr
+*.cbz
+
+# Archives & Large data files
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
 
 # Obsidian Vault Settings (if opened as separate vault)
 .obsidian/workspace.json
