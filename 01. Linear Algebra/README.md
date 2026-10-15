@@ -7,7 +7,7 @@
 
 ## Sessions
 
-- [Session 01](./Session-01/) — 두 명의 발표 문서 준비 중
+- [Session 01](./Session-01/) — Chapter 1 (Presenter A) 발표 노트 작성 완료; Presenter B 준비 중
 
 미팅마다 `Session-XX/` 폴더를 만들고, 아래 세 가지 문서를 기록합니다.
 
