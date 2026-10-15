@@ -1,6 +1,7 @@
 # OS / System Files
 .DS_Store
 Thumbs.db
+[Dd]esktop.ini
 desktop.ini
 $RECYCLE.BIN/
 
