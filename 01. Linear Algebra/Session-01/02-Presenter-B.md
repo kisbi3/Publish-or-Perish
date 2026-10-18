@@ -89,7 +89,7 @@ T\text{가 단사}\Longleftrightarrow N(T)=\lbrace 0_V\rbrace,\qquad
 T\text{가 전사}\Longleftrightarrow R(T)=W.
 $$
 
-특히 $\dim(V)=\dim(W)=n<\infty$이면 정리 2.5에 의해
+특히 $\dim(V)=\dim(W)=n\lt\infty$이면 정리 2.5에 의해
 
 $$
 \boxed{T\text{가 단사}\Longleftrightarrow T\text{가 전사}
@@ -344,7 +344,7 @@ $$
 
 1. 합성이 정의되는 가역함수에 대해 $(TU)^{-1}=U^{-1}T^{-1}$.
 2. $(T^{-1})^{-1}=T$.
-3. $\dim(V)=\dim(W)<\infty$이면 $T$가 가역일 필요충분조건은 $\mathrm{rank}(T)=\dim(V)$이다.
+3. $\dim(V)=\dim(W)\lt\infty$이면 $T$가 가역일 필요충분조건은 $\mathrm{rank}(T)=\dim(V)$이다.
 
 **정리 2.17.** 가역인 선형변환의 역함수도 선형이다. 또한 $V,W$ 중 하나가 유한차원이면 다른 하나도 유한차원이고 $\dim(V)=\dim(W)$이다(따름정리).
 
@@ -674,7 +674,7 @@ $$
 으로 쓰면, 정리 2.34에 의해
 
 $$
-\boxed{\mathcal B=\lbrace t^ke^{c_jt}:1\leq j\leq r,\ 0\leq k<m_j\rbrace}
+\boxed{\mathcal{B}=\lbrace t^{k}e^{c_jt}:j=1,\ldots,r,\quad k=0,\ldots,m_j-1\rbrace}
 $$
 
 가 $\mathcal S$의 기저다. 따라서 일반해는
@@ -719,3 +719,4 @@ $$
 $$
 
 은 동형사상이다. 따라서 $n$개의 초기값을 지정하면 해공간에서 하나의 해가 유일하게 결정된다.
+
