@@ -27,8 +27,8 @@ $$
 $T:V\to W$에 대해
 
 $$
-N(T):=\{x\in V:T(x)=0_W\},\qquad
-R(T):=\{y\in W:\exists x\in V,\ T(x)=y\}.
+N(T):=\lbrace x\in V:T(x)=0_W\rbrace,\qquad
+R(T):=\lbrace y\in W:\exists x\in V,\ T(x)=y\rbrace.
 $$
 
 영공간은 $0$으로 보내지는 입력들, 상공간은 가능한 출력들의 공간이다. 정리 2.1에 의해 $N(T)\leq V$, $R(T)\leq W$이다. $\beta=(v_1,\ldots,v_n)$이 $V$의 기저이면 정리 2.2에 의해
@@ -43,8 +43,8 @@ $$
 
 | 변환 | 영공간 | 상공간 |
 |---|---|---|
-| $I_V$ | $\{0_V\}$ | $V$ |
-| $T_0$ | $V$ | $\{0_W\}$ |
+| $I_V$ | $\lbrace 0_V\rbrace$ | $V$ |
+| $T_0$ | $V$ | $\lbrace 0_W\rbrace$ |
 
 ## Nullity, rank와 차원정리 — 정리 2.3
 
@@ -85,7 +85,7 @@ $$
 를 뜻한다. 정리 2.4와 상공간의 정의에 의해
 
 $$
-T\text{가 단사}\Longleftrightarrow N(T)=\{0_V\},\qquad
+T\text{가 단사}\Longleftrightarrow N(T)=\lbrace 0_V\rbrace,\qquad
 T\text{가 전사}\Longleftrightarrow R(T)=W.
 $$
 
@@ -127,7 +127,7 @@ $$
 
 **(f)** $T$가 선형이면 $V$의 선형독립인 부분집합의 상은 $W$의 선형독립인 부분집합이다.
 
-**F :** 영변환 $T_0:\mathbb R\to\mathbb R$은 선형독립인 $\{1\}$을 선형종속인 $\{0\}$으로 보낸다.
+**F :** 영변환 $T_0:\mathbb R\to\mathbb R$은 선형독립인 $\lbrace 1\rbrace$을 선형종속인 $\lbrace 0\rbrace$으로 보낸다.
 
 **(g)** $T,U:V\to W$가 선형이고 $V$의 한 기저 위에서 일치하면 $T=U$이다.
 
@@ -156,7 +156,7 @@ $$
 
 으로 $T$의 작용을 $W$ 위에서 따로 분석할 수 있다.
 
-$\{0_V\}$, $V$, $N(T)$, $R(T)$는 모두 $T$-불변부분공간이다(연습문제 29). 제한변환의 영공간과 상공간은 다음과 같다(연습문제 33).
+$\lbrace 0_V\rbrace$, $V$, $N(T)$, $R(T)$는 모두 $T$-불변부분공간이다(연습문제 29). 제한변환의 영공간과 상공간은 다음과 같다(연습문제 33).
 
 $$
 N(T_W)=N(T)\cap W,
@@ -204,7 +204,7 @@ $$
 ## 선형변환 공간과 행렬 연산
 
 $$
-\mathcal L(V,W):=\{T:V\to W\mid T\text{는 선형}\}
+\mathcal L(V,W):=\lbrace T:V\to W\mid T\text{는 선형}\rbrace
 $$
 
 는 함수의 점별 덧셈과 스칼라곱을 갖는 벡터공간이다. $V=W$이면 $\mathcal L(V)$로 쓴다. 행렬 표현은 이 연산을 보존한다.
@@ -248,7 +248,7 @@ $$
 $n$개의 대상 사이의 관계를 $i\to j$로 나타내자. 이 관계의 **결합행렬**은
 
 $$
-\forall i,j\in\{1,\ldots,n\},\qquad
+\forall i,j\in\lbrace 1,\ldots,n\rbrace,\qquad
 A_{ij}:=
 \begin{cases}
 1,&i\to j,\\
@@ -412,7 +412,7 @@ f(3)&f(4)
 \quad(\forall f\in P_3(\mathbb R)).
 $$
 
-**풀이.** $T(f)=O$이면 $f(1)=f(2)=f(3)=f(4)=0$이다. 차수가 $3$ 이하인 영이 아닌 다항식은 서로 다른 네 근을 가질 수 없으므로 $f=0$. 따라서 $N(T)=\{0\}$이고 $T$는 단사다. 또한
+**풀이.** $T(f)=O$이면 $f(1)=f(2)=f(3)=f(4)=0$이다. 차수가 $3$ 이하인 영이 아닌 다항식은 서로 다른 네 근을 가질 수 없으므로 $f=0$. 따라서 $N(T)=\lbrace 0\rbrace$이고 $T$는 단사다. 또한
 
 $$
 \dim(P_3(\mathbb R))=4=\dim(M_{2\times2}(\mathbb R))
@@ -538,13 +538,13 @@ $QR$도 가역이므로 $A\sim C$. 따라서 닮음은 동치관계다. $\square
 이러한 함수들로 이루어진 벡터공간
 
 $$
-\boxed{V^*:=\mathcal L(V,\mathbb F)}
+\boxed{V^{\ast}:=\mathcal L(V,\mathbb F)}
 $$
 
 을 $V$의 **쌍대공간** 이라 한다. 덧셈과 스칼라곱은 함수값에 대해 점별로 정의한다. $V$가 유한차원이면
 
 $$
-\dim(V^*)=\dim(V).
+\dim(V^{\ast})=\dim(V).
 $$
 
 ## 쌍대기저 (Dual basis) — 정리 2.24
@@ -553,10 +553,10 @@ $V$의 순서기저 $\beta=(v_1,\ldots,v_n)$에 대해
 
 $$
 f_i(v_j)=\delta_{ij}
-\quad(\forall i,j\in\{1,\ldots,n\})
+\quad(\forall i,j\in\lbrace 1,\ldots,n\rbrace)
 $$
 
-를 만족하는 선형범함수들의 순서기저 $\beta^*=(f_1,\ldots,f_n)$를 **$\beta$의 쌍대기저**라 한다. 여기서 $\delta_{ij}$는 $i=j$이면 $1$, 그 외에는 $0$이다. 따라서
+를 만족하는 선형범함수들의 순서기저 $\beta^{\ast}=(f_1,\ldots,f_n)$를 **$\beta$의 쌍대기저**라 한다. 여기서 $\delta_{ij}$는 $i=j$이면 $1$, 그 외에는 $0$이다. 따라서
 
 $$
 x=\sum_{j=1}^{n}a_jv_j
@@ -564,11 +564,11 @@ x=\sum_{j=1}^{n}a_jv_j
 f_i(x)=a_i.
 $$
 
-즉, $f_i$는 $i$번째 좌표를 추출하는 함수다. 정리 2.24에 의해 $\beta^*$는 실제로 $V^*$의 기저이며,
+즉, $f_i$는 $i$번째 좌표를 추출하는 함수다. 정리 2.24에 의해 $\beta^{\ast}$는 실제로 $V^{\ast}$의 기저이며,
 
 $$
 \boxed{f=\sum_{i=1}^{n}f(v_i)f_i}
-\qquad(\forall f\in V^*).
+\qquad(\forall f\in V^{\ast}).
 $$
 
 선형범함수의 쌍대기저에 대한 좌표는 원래 기저벡터들에서의 함수값이다.
@@ -578,36 +578,36 @@ $$
 선형변환 $T:V\to W$에 대해 **쌍대변환**을 교재의 표기에 따라
 
 $$
-T^t:W^*\to V^*,\qquad
+T^t:W^{\ast}\to V^{\ast},\qquad
 T^t(g):=gT
-\quad(\forall g\in W^*)
+\quad(\forall g\in W^{\ast})
 $$
 
 로 정의한다. 즉,
 
 $$
 \bigl(T^t(g)\bigr)(v)=g(T(v))
-\quad(\forall g\in W^*,\ \forall v\in V).
+\quad(\forall g\in W^{\ast},\ \forall v\in V).
 $$
 
 $T^t$는 선형이며, 교재에서는 $T$의 **전치변환(transpose)** 이라 부른다. $W$ 위의 선형범함수 $g$를 $V$ 위의 선형범함수 $gT$로 옮기므로 변환의 방향이 반대가 된다.
 
 ## 쌍대변환과 전치행렬 — 정리 2.25
 
-$\dim(V)=n$, $\dim(W)=m$이고 순서기저를 각각 $\beta,\gamma$, 그 쌍대기저를 $\beta^*,\gamma^*$라 하자. **쌍대변환 $T^t:W^*\to V^*$의 쌍대기저에 대한 행렬 표현은 원래 선형변환 $T:V\to W$의 행렬 표현을 전치한 행렬이다.** 즉, $A=[T]_\beta^\gamma$이면
+$\dim(V)=n$, $\dim(W)=m$이고 순서기저를 각각 $\beta,\gamma$, 그 쌍대기저를 $\beta^{\ast},\gamma^{\ast}$라 하자. **쌍대변환 $T^t:W^{\ast}\to V^{\ast}$의 쌍대기저에 대한 행렬 표현은 원래 선형변환 $T:V\to W$의 행렬 표현을 전치한 행렬이다.** 즉, $A=[T]_\beta^\gamma$이면
 
 $$
-\boxed{[T^t]_{\gamma^*}^{\beta^*}
+\boxed{[T^t]_{\gamma^{\ast}}^{\beta^{\ast}}
 =\left([T]_\beta^\gamma\right)^{\mathsf T}
 =A^{\mathsf T}}.
 $$
 
 $T$의 행렬 표현이 $m\times n$이면 $T^t$의 행렬 표현은 $n\times m$이다.
 
-실제로 $\beta=(v_1,\ldots,v_n)$, $\gamma=(w_1,\ldots,w_m)$, $\gamma^*=(g_1,\ldots,g_m)$라 하면
+실제로 $\beta=(v_1,\ldots,v_n)$, $\gamma=(w_1,\ldots,w_m)$, $\gamma^{\ast}=(g_1,\ldots,g_m)$라 하면
 
 $$
-\bigl([T^t]_{\gamma^*}^{\beta^*}\bigr)_{ij}
+\bigl([T^t]_{\gamma^{\ast}}^{\beta^{\ast}}\bigr)_{ij}
 =T^t(g_j)(v_i)
 =g_j(T(v_i))
 =A_{ji}.
@@ -643,7 +643,7 @@ $$
 로 정의하면 방정식은 $p(D)y=0$이다. 따라서 **해공간**은
 
 $$
-\boxed{\mathcal S:=\{y\in C^\infty(\mathbb R,\mathbb C):p(D)y=0\}=N(p(D))}
+\boxed{\mathcal S:=\lbrace y\in C^\infty(\mathbb R,\mathbb C):p(D)y=0\rbrace=N(p(D))}
 $$
 
 이고, 정리 2.32에 의해
@@ -674,7 +674,7 @@ $$
 으로 쓰면, 정리 2.34에 의해
 
 $$
-\boxed{\mathcal B=\{t^ke^{c_jt}:1\leq j\leq r,\ 0\leq k<m_j\}}
+\boxed{\mathcal B=\lbrace t^ke^{c_jt}:1\leq j\leq r,\ 0\leq k<m_j\rbrace}
 $$
 
 가 $\mathcal S$의 기저다. 따라서 일반해는
@@ -701,7 +701,7 @@ $$
 
 **문제.** $y'''-4y''+5y'-2y=0$의 일반해를 구하라.
 
-**풀이.** $p(\lambda)=\lambda^3-4\lambda^2+5\lambda-2=(\lambda-1)^2(\lambda-2)$이므로 해공간의 기저는 $\{e^t,te^t,e^{2t}\}$이다. 따라서
+**풀이.** $p(\lambda)=\lambda^3-4\lambda^2+5\lambda-2=(\lambda-1)^2(\lambda-2)$이므로 해공간의 기저는 $\lbrace e^t,te^t,e^{2t}\rbrace$이다. 따라서
 
 $$
 y(t)=(b_0+b_1t)e^t+b_2e^{2t}.
