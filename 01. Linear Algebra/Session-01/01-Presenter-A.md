@@ -1,735 +1,324 @@
-# Chapter 1 — Vector Spaces
+# Presentation — Vector Spaces: Axioms, Subspaces, and the Theory of Dimension
 
-> Friedberg, Insel & Spence, *Linear Algebra*, 5th ed. (Pearson, 2019), **Chapter 1, pp. 1–63**  
-> **Publish or Perish · Session 01 · Presentation 01**  
-> 발표자: @kisbi3  
-> 범위: **§§1.1–1.6 (필수) / §1.7 (선택)**
-
-이 문서는 **교재 1장을 설명하기 위한 발표 원고**다. 정리 번호와 절 순서는 교재를 따르되, 설명과 증명 전개는 발표를 위해 새롭게 구성했다. 직접 증명해 보거나 토론할 내용은 마지막에 모았다.
-
-## 전체 관점: 이번 장에서 답할 질문
-
-> **무엇이 벡터인가? 어떤 벡터들만으로 공간 전체를 표현할 수 있는가? 그때 필요한 벡터의 최소 개수는 왜 변하지 않는가?**
-
-핵심 흐름은 다음과 같다.
-
-**벡터공간의 공리** → **부분공간** → **선형결합과 Span** → **선형독립** → **기저** → **차원**.
-
-여기서 가장 중요한 관점은 벡터를 반드시 공간상의 화살표로 생각할 필요가 없다는 것이다. 다항식, 함수, 행렬, 수열도 적절한 덧셈과 스칼라곱이 정의되면 벡터로 다룰 수 있다.
-
-**발표 목표**
-
-1. 벡터공간의 정의를 공리로 설명하고 다양한 예에 적용할 수 있다.
-2. 부분공간의 판별과 Span의 최소성을 증명할 수 있다.
-3. 선형독립과 기저의 관계, 좌표표현의 유일성을 설명할 수 있다.
-4. Replacement Theorem으로 차원이 잘 정의됨을 이해한다.
-5. 선택적으로 무한차원 벡터공간의 기저 존재 문제를 살펴본다.
+- **Presenter:** Presenter A (@kisbi3)
+- **Date:** 2026-10-19
+- **Textbook:** Linear Algebra (5th Edition, Stephen H. Friedberg, Arnold J. Insel, Lawrence E. Spence)
+- **Chapters / Sections:** Chapter 1 (Sec 1.1 ~ Sec 1.7*)
 
 ---
 
-## 1.1 Introduction — 기하학에서 추상적 구조로 (pp. 1–5)
+## 0. Overview & Motivation
 
-### 1.1.1 화살표로서의 벡터
+- **핵심 질문:** 물리적 공간의 화살표(힘, 속도)가 가지는 기하학적 연산 법칙을 추상화하여 함수, 다항식, 행렬 등 일반적인 수학적 대상에 공통으로 적용되는 **'선형성(Linearity)의 무대'**와 **'차원(Dimension)의 불변성'**을 어떻게 엄밀하게 구축할 수 있는가?
+- **전체 흐름:** 물리적 벡터의 기하학적 직관(Sec 1.1) $\to$ 체(Field) 위의 벡터공간 공리화 및 부분공간 판정(Sec 1.2~1.3) $\to$ 생성(Span)과 일차독립을 통한 최소 생성집합 탐색(Sec 1.4~1.5) $\to$ 대체 정리(Replacement Theorem)를 통한 기저(Basis)와 차원(Dimension)의 확립(Sec 1.6) $\to$ 하우스도르프 극대 원리를 통한 무한차원 기저의 존재성 증명(Sec 1.7*)
 
-물리학에서 힘과 속도는 크기와 방향으로 표현된다. 두 벡터의 합은 평행사변형 법칙으로 정의하고, 실수 스칼라를 곱하면 길이와 (부호에 따라) 방향이 변한다.
+```mermaid
+flowchart LR
+    A["Sec 1.1~1.2<br/>물리적 벡터와<br/>벡터공간 8공리 (VS 1~8)"] -->|하위 구조| B["Sec 1.3<br/>부분공간 (Subspace)<br/>& 직합 (Direct Sum)"]
+    B -->|벡터들의 결합| C["Sec 1.4~1.5<br/>일차결합, 생성(Span)<br/>& 일차독립/종속"]
+    C -->|교집합: 최소 생성집합| D["Sec 1.6<br/>기저(Basis)와 차원<br/>대체 정리 & 라그랑주 보간법"]
+    D -->|무한차원으로의 확장| E["Sec 1.7*<br/>극대 일차독립 부분집합<br/>(Hausdorff 극대 원리)"]
+```
 
-좌표를 사용하면 두 연산은 간단하다.
-
-$$
-(a_1,\ldots,a_n)+(b_1,\ldots,b_n)
-=(a_1+b_1,\ldots,a_n+b_n),
-$$
-
-$$
-c(a_1,\ldots,a_n)=(ca_1,\ldots,ca_n).
-$$
-
-이 계산의 배후에는 교환법칙, 결합법칙, 분배법칙 등의 공통적인 대수적 구조가 있다. 다음 절에서는 **기하학적인 그림보다 이러한 연산의 성질을 먼저 정의**한다.
-
-### 1.1.2 직선과 평면의 매개변수 표현
-
-서로 다른 두 점 $\mathbf a,\mathbf b\in\mathbb R^n$을 지나는 직선은
-
-$$
-\mathbf x(t)=\mathbf a+t(\mathbf b-\mathbf a),\qquad t\in\mathbb R.
-$$
-
-세 점 $\mathbf a,\mathbf b,\mathbf c\in\mathbb R^3$이 일직선 위에 있지 않다면 그 평면은
-
-$$
-\mathbf x(s,t)
-=\mathbf a+s(\mathbf b-\mathbf a)+t(\mathbf c-\mathbf a)
-$$
-
-로 표현된다. 직선·평면의 표현이 바로 **벡터들의 선형결합**을 사용한다는 사실을 기억하자.
-
-**다음 절로 넘어가는 질문:** 좌표를 가진 화살표가 아니어도 이러한 덧셈과 스칼라곱이 가능할까?
+> 🌉 **Bridge (0절 $\to$ 1절):**  
+> 우리는 먼저 물리적 공간의 화살표(힘, 속도)에서 관찰되는 덧셈과 스칼라배의 기본 성질을 8가지 공리로 추상화하여, 모든 선형적 수학 대상이 활동할 '우주(Vector Space)'를 세우는 작업부터 시작합니다.
 
 ---
 
-## 1.2 Vector Spaces — 벡터공간의 공리 (pp. 6–16)
+## 1. Sec 1.1 ~ 1.2 Introduction & Vector Spaces
 
-### 1.2.1 Definition: Vector Space
+### Concept / Setup
 
-$\mathbb F$를 체(field), $V$를 집합이라고 하자. $V$ 위에
+> **📌 Definition (Vector Space over a Field $F$):**  
+> 체(Field) $F$ 위의 **벡터공간(Vector Space)** $V$는 두 연산 **덧셈(Addition, $x+y \in V$)**과 **스칼라 곱(Scalar Multiplication, $ax \in V$)**이 정의되어 아래 8가지 공리 **(VS 1)~(VS 8)**을 만족하는 집합이다 (단, $x, y, z \in V$는 **벡터**, $a, b \in F$는 **스칼라**).
 
-- 덧셈 $+:V\times V\to V$,
-- 스칼라곱 $\mathbb F\times V\to V$
+- **덧셈에 관한 공리 (Abelian Group 구조):**
+  - **(VS 1) 교환법칙:** $x + y = y + x$
+  - **(VS 2) 결합법칙:** $(x + y) + z = x + (y + z)$
+  - **(VS 3) 덧셈 항등원(영벡터, Zero Vector)의 존재:** $\forall x \in V,\; x + 0 = x$를 만족하는 $0 \in V$가 존재한다.
+  - **(VS 4) 덧셈 역원(Additive Inverse)의 존재:** 각 $x \in V$마다 $x + y = 0$을 만족하는 $y \in V$ (기호로 $-x$)가 존재한다.
 
-이 정의되어 다음 8개 공리를 만족하면 $V$를 **$\mathbb F$ 위의 벡터공간**이라고 한다.
+- **스칼라 곱 및 분배에 관한 공리:**
+  - **(VS 5) 스칼라 항등원:** $1x = x$ (단, $1 \in F$는 체 $F$의 곱셈 항등원)
+  - **(VS 6) 스칼라 곱의 결합성:** $(ab)x = a(bx)$
+  - **(VS 7) 벡터 덧셈에 대한 분배법칙:** $a(x + y) = ax + ay$
+  - **(VS 8) 스칼라 덧셈에 대한 분배법칙:** $(a + b)x = ax + bx$
 
-모든 $x,y,z\in V$, $a,b\in\mathbb F$에 대해
+- **대표적인 벡터공간의 예:**
+  1. **$n$-순서쌍 공간 $F^n$:** 원소가 $u = (a_1, a_2, \dots, a_n)$ ($a_i \in F$)인 집합 (예: $\mathbb{R}^3, \mathbb{C}^2$).
+  2. **$m \times n$ 행렬 공간 $M_{m \times n}(F)$:** 성분별 덧셈 $(A+B)_{ij} = A_{ij} + B_{ij}$과 스칼라 곱 $(cA)_{ij} = cA_{ij}$을 부여한 행렬 공간.
+  3. **함수 공간 $\mathcal{F}(S, F)$:** 공집합이 아닌 집합 $S$에서 체 $F$로 가는 모든 함수들의 집합. 점별(pointwise) 연산 $(f+g)(s) = f(s)+g(s)$, $(cf)(s) = c[f(s)]$로 정의.
+  4. **다항식 공간 $P(F)$:** $f(x) = a_n x^n + \cdots + a_1 x + a_0$ ($a_k \in F$) 형태의 다항식 전체의 집합 (영다항식 $f(x)=0$의 차수는 $\deg(0) = -1$로 정의).
+  5. **수열 공간:** 자연수에서 $F$로 가는 함수(수열) $(a_n)$ 전체의 집합.
 
-| 공리 | 내용 |
-|---|---|
-| VS1 | $x+y=y+x$ |
-| VS2 | $(x+y)+z=x+(y+z)$ |
-| VS3 | 어떤 $0_V\in V$가 존재하여 $x+0_V=x$ |
-| VS4 | 각 $x$에 대해 $x+y=0_V$인 $y\in V$가 존재 |
-| VS5 | $1_{\mathbb F}x=x$ |
-| VS6 | $(ab)x=a(bx)$ |
-| VS7 | $a(x+y)=ax+ay$ |
-| VS8 | $(a+b)x=ax+bx$ |
+![Figure 1: Parallelogram Law and Vector Addition|535](attachments/01-fig1-parallelogram-law.svg)
+_▲ Figure 1: 평행사변형 법칙에 따른 두 벡터의 덧셈 $x+y$와 좌표 평면 상의 표현_
 
-**주의:** $0_{\mathbb F}$는 체의 영원소이고 $0_V$는 벡터공간의 영벡터다. 다른 대상이지만 흔히 모두 $0$으로 쓴다.
+### Derivation / Proof
 
-벡터공간을 정의할 때는 집합 $V$만 제시하는 것으로 부족하다. **체 $\mathbb F$, 덧셈, 스칼라곱을 모두 지정**해야 한다.
+벡터공간의 8가지 공리로부터 우리가 당연하게 쓰던 대수적 성질들(**Theorem 1.1 소거법칙**, **Theorem 1.2 스칼라 $0$과 역원의 성질**)이 유도됩니다. 특히 $0x = 0$과 $(-1)x = -x$는 공리가 아니라 **공리로부터 증명되는 정리**입니다.
 
-### 1.2.2 대표적인 벡터공간
+> **🧠 Mental Model (당연해 보이는 성질의 공리적 구축):**  
+> 고등학교까지는 $0x = 0$이나 $x+z=y+z \implies x=y$를 당연한 상식으로 썼지만, 추상대수에서는 '체 $F$의 스칼라 0'과 '공간 $V$의 영벡터 0'이라는 서로 다른 세계의 영(zero)이 충돌 없이 맞물려 돌아가도록 8공리로부터 엄밀하게 구축한 첫 번째 안전장치입니다.
 
-| 공간 | 벡터로 취급하는 대상 | 연산 |
+$$\begin{aligned}
+0x + 0x &= (0 + 0)x \quad (\because \text{VS 8 스칼라 분배}) \\
+&= 0x = \underbrace{0x + 0}_{\text{VS 3 영벡터 성질}} = 0 + 0x \quad (\because \text{VS 1 교환법칙}) \\
+\implies 0x &= 0 \quad (\because \text{Theorem 1.1 덧셈의 소거법칙: } x+z = y+z \implies x=y)
+\end{aligned}$$
+
+1. **Theorem 1.1 (Cancellation Law for Vector Addition):** $x + z = y + z \implies x = y$.
+   - (VS 4)에 의해 $z + v = 0$인 $v \in V$가 존재합니다.
+   - (VS 2), (VS 3)을 순차적으로 적용하면:
+     $$x = x + 0 = x + (z + v) = (x + z) + v = (y + z) + v = y + (z + v) = y + 0 = y$$
+
+2. **Corollary 1 & 2 (영벡터 $0$과 덧셈 역원 $-x$의 유일성):**
+   - 만약 $0'$도 영벡터라면 모든 $x \in V$에 대해 $x + 0' = x = x + 0$이므로 소거법칙에 의해 $0' = 0$입니다.
+   - 마찬가지로 $x + y = 0$이고 $x + y' = 0$이면 $y + x = y' + x$이므로 $y = y'$입니다.
+
+3. **Theorem 1.2(b): $(-a)x = -(ax) = a(-x)$:**
+   - $-(ax)$는 $ax$와 더해서 $0$이 되는 유일한 벡터입니다. 그런데 (VS 8)과 Theorem 1.2(a)에 의해:
+     $$ax + (-a)x = [a + (-a)]x = 0x = 0$$
+   - 역원의 유일성(Corollary 2)에 의해 $(-a)x = -(ax)$가 성립합니다. 특히 $a=1$을 대입하면 $(-1)x = -x$가 되며, (VS 6)에 의해 $a(-x) = a[(-1)x] = [a(-1)]x = (-a)x$가 성립합니다.
+
+> **💡 Intuition / Note:**  
+> 왜 공리 **(VS 5) $1x = x$**가 꼭 필요할까요? 교재 Example 7처럼 $\mathbb{R}^2$에서 $(a_1, a_2) + (b_1, b_2) = (a_1+b_1, 0)$, $c(a_1, a_2) = (ca_1, 0)$으로 정의하면 다른 결합·분배법칙이 성립하더라도 $1(a_1, a_2) = (a_1, 0) \neq (a_1, a_2)$가 되어 두 번째 성분이 소멸하는 퇴화(degeneracy)가 발생합니다. **(VS 5)**는 스칼라 체 $F$의 항등원이 벡터를 변형시키지 않도록 고정하는 닻 역할을 합니다.
+
+> 🌉 **Bridge (1절 $\to$ 2절):**  
+> 전체 벡터공간 $V$라는 거대한 우주를 확립했으니, 이제 시선을 좁혀 그 안에서 동일한 연산 법칙을 따르며 스스로 완결성을 갖추는 '작은 우주(부분공간, Subspace)'들을 탐색하고 분할하는 방법을 살펴봅니다.
+
+---
+
+## 2. Sec 1.3 Subspaces & Direct Sums
+
+### Concept / Setup
+
+> **📌 Definition & Theorem 1.3 (Subspace Test):**  
+> 벡터공간 $V$의 부분집합 $W \subseteq V$가 $V$에서 정의된 연산에 대하여 그 자체로 벡터공간을 이룰 때 $W$를 $V$의 **부분공간(Subspace)**이라 한다. $W$가 부분공간일 필요충분조건은 다음 세 조건이 성립하는 것이다:
+> 1. **(영벡터 포함):** $0 \in W$ (이를 통해 $W \neq \emptyset$임과 영벡터의 일치가 보장됨)
+> 2. **(덧셈에 대한 닫힘성):** $x, y \in W \implies x + y \in W$
+> 3. **(스칼라 곱에 대한 닫힘성):** $c \in F, x \in W \implies cx \in W$
+
+> **🧠 Mental Model (부분공간의 3대 검문소):**  
+> 8가지 공리를 매번 확인할 필요 없이, ① "원점을 지나는가($0 \in W$)?", ② "더해도 안에서 도는가($x+y \in W$)?", ③ "늘리고 줄여도 안에서 도는가($cx \in W$)?"라는 딱 3가지 관문만 통과하면 나머지 5개 대수적 공리는 부모 공간 $V$로부터 공짜로 상속됩니다.
+
+- **주요 부분공간의 예:**
+  - **차수가 $n$ 이하인 다항식 공간:** $P_n(F) \subseteq P(F)$
+  - **연속함수 공간 및 미분가능 함수 공간:** $C^n(\mathbb{R}) \subseteq C(\mathbb{R}) \subseteq \mathcal{F}(\mathbb{R}, \mathbb{R})$
+  - **특수 행렬 부분공간 ($\subseteq M_{n \times n}(F)$):** 대칭행렬($A^t = A$), 교대행렬/반대칭행렬($A^t = -A$), 상삼각행렬($i > j \implies A_{ij}=0$), 대각행렬($i \neq j \implies A_{ij}=0$), 대각합(Trace)이 $0$인 행렬($\operatorname{tr}(A) = \sum_{i=1}^n A_{ii} = 0$).
+
+- **부분공간들의 연산과 직합(Direct Sum, Exercises 19, 23~30):**
+  - **교집합 (Theorem 1.4):** 부분공간들의 임의의 교집합 $\bigcap_{i} W_i$은 항상 부분공간이다.
+  - **합집합 (Exercise 19):** 두 부분공간의 합집합 $W_1 \cup W_2$가 부분공간일 필요충분조건은 $W_1 \subseteq W_2$ 또는 $W_2 \subseteq W_1$이다.
+  - **부분공간의 합(Sum):** $W_1 + W_2 = \{x + y : x \in W_1 \text{ and } y \in W_2\}$는 $W_1$과 $W_2$를 모두 포함하는 **가장 작은 부분공간**이다.
+  - **직합 (Direct Sum, $V = W_1 \oplus W_2$):** $W_1 \cap W_2 = \{0\}$이고 $W_1 + W_2 = V$일 때, $V$를 $W_1$과 $W_2$의 **직합**이라 한다.
+
+![Figure 2: Subspace vs Affine Plane (Coset)|858](attachments/01-fig2-subspace-vs-coset.svg)
+_▲ Figure 2: 원점을 지나는 부분공간 $W = \operatorname{span}(\{u, v\})$과 원점을 지나지 않는 평행이동된 평면(잉여류) $A + W$의 기하학적 비교_
+
+### Derivation / Proof
+
+직합 $V = W_1 \oplus W_2$의 가장 핵심적인 대수적 성질은 모든 벡터의 유일한 분해(Unique Decomposition, Exercise 30)와 정사각행렬 공간의 대칭/교대행렬 직합 분해(Exercise 28)입니다.
+
+> **🧠 Mental Model (직합: 겹침 없는 레고 블록 분해):**  
+> 직합($V = W_1 \oplus W_2$)은 공간을 영벡터($\{0\}$) 외에는 단 하나의 공통분모도 없이 완벽하게 분할하는 기법입니다. 이를 통해 임의의 복잡한 벡터(또는 행렬)를 고유한 부품들의 합(예: 임의의 정사각행렬을 대칭행렬과 교대행렬의 합)으로 단 한 가지 방식으로만 깔끔하게 해체(유일 분해)할 수 있습니다.
+
+$$\begin{aligned}
+V = W_1 \oplus W_2 &\iff \forall v \in V,\; \exists! x_1 \in W_1, \exists! x_2 \in W_2 \text{ s.t. } v = x_1 + x_2 \\
+M_{n \times n}(F) &= \underbrace{W_{\text{sym}}}_{\text{대칭행렬 } (A^t = A)} \oplus \underbrace{W_{\text{skew}}}_{\text{교대행렬 } (A^t = -A)} \quad (\text{단, } \operatorname{char}(F) \neq 2)
+\end{aligned}$$
+
+1. **Exercise 1.3.30 ($V = W_1 \oplus W_2 \iff$ 유일한 분해):**
+   - ($\Rightarrow$) $V = W_1 + W_2$이므로 임의의 $v \in V$는 $v = x_1 + x_2$ ($x_i \in W_i$)로 표현됩니다. 만약 $v = x_1 + x_2 = y_1 + y_2$ ($y_i \in W_i$)라고 하면:
+     $$x_1 - y_1 = y_2 - x_2 \in W_1 \cap W_2 = \{0\} \implies x_1 = y_1 \text{ and } x_2 = y_2$$
+   - ($\Leftarrow$) 모든 $v \in V$가 $x_1 + x_2$로 표현되므로 $V = W_1 + W_2$입니다. 또한 $z \in W_1 \cap W_2$라 하면 $z$는 두 가지 방식으로 표현됩니다:
+     $$z = z + 0 \quad (z \in W_1, 0 \in W_2) \quad \text{및} \quad z = 0 + z \quad (0 \in W_1, z \in W_2)$$
+     표현의 유일성에 의해 $z = 0$이므로 $W_1 \cap W_2 = \{0\}$입니다.
+
+2. **Exercise 1.3.28 ($M_{n \times n}(F) = W_{\text{sym}} \oplus W_{\text{skew}}$):**
+   - 임의의 행렬 $A \in M_{n \times n}(F)$에 대하여 (체 $F$의 표수가 $2$가 아니므로 $\frac{1}{2} \in F$ 존재):
+     $$A = \underbrace{\frac{1}{2}(A + A^t)}_{\in W_{\text{sym}}} + \underbrace{\frac{1}{2}(A - A^t)}_{\in W_{\text{skew}}}$$
+   - 교집합 확인: $M \in W_{\text{sym}} \cap W_{\text{skew}}$이면 $M^t = M$이고 $M^t = -M$이므로 $M = -M \implies 2M = O \implies M = O$입니다. 따라서 $M_{n \times n}(F) = W_{\text{sym}} \oplus W_{\text{skew}}$입니다.
+
+> **💡 Intuition / Note (기하학적 직관):**  
+> - **왜 $0 \in W$가 필수적인가? (Figure 2 해설):** Figure 2에서 보듯, 두 벡터 $u, v$가 생성하는 초록색 평면 $W = \operatorname{span}(\{u, v\})$는 원점을 지나므로 덧셈과 스칼라 곱에 닫혀 있는 **부분공간**입니다. 반면, 이 평면을 벡터 $A \neq 0$만큼 평행이동한 파란색 평면 $A + W$는 기하학적으로 평평하지만 **원점을 포함하지 않습니다 ($0 \notin A+W$)**. 여기에 스칼라 $0$을 곱하면 $0 \cdot x = 0 \notin A+W$가 되어 평면 밖으로 튕겨 나가므로 결코 부분공간이 될 수 없습니다 (이는 비동차 연립방정식 $Ax = b$의 해집합이 부분공간이 아닌 기하학적 이유이기도 합니다).
+> - **합집합의 한계:** 두 부분공간의 합집합 $W_1 \cup W_2$ 또한 덧셈에 대해 닫혀 있지 못합니다 ($\mathbb{R}^2$에서 $x$축과 $y$축의 합집합을 생각하면 $(1,0) + (0,1) = (1,1) \notin W_1 \cup W_2$). 따라서 두 부분공간을 아우르는 최소 부분공간을 구축하려면 모든 원소 간의 덧셈을 허용하는 **부분공간의 합 $W_1 + W_2$**를 취해야 합니다.
+
+> 🌉 **Bridge (2절 $\to$ 3절):**  
+> 부분공간을 형성하는 가장 자연스러운 방법은 주어진 몇 개의 벡터들을 섞는(일차결합) 것입니다. 그렇다면 '불필요한 낭비(중복)' 없이 최소한의 벡터들로 원하는 공간 전체를 덮으려면 어떤 조건이 필요할까요? 바로 '생성(Span)'과 '일차독립'의 개념입니다.
+
+---
+
+## 3. Sec 1.4 ~ 1.5 Linear Combinations, Span, and Linear Independence
+
+### Concept / Setup
+
+> **📌 Definitions (Linear Combination, Span, Linear Dependence & Independence):**  
+> - **일차결합 (Linear Combination):** 부분집합 $S \subseteq V$의 유한개의 벡터 $u_1, \dots, u_n \in S$와 스칼라 $a_1, \dots, a_n \in F$에 대하여 $v = a_1 u_1 + \cdots + a_n u_n$ 꼴로 표현되는 벡터.
+> - **생성공간 (Span):** $S$의 모든 일차결합들의 집합을 $\operatorname{span}(S)$라 하며, 편의상 $\operatorname{span}(\emptyset) = \{0\}$으로 정의한다. $\operatorname{span}(S) = V$일 때 $S$가 $V$를 **생성한다(generate / span)**고 한다.
+> - **일차종속 (Linearly Dependent):** $S$의 서로 다른 유한개의 벡터 $u_1, \dots, u_n$과 **모두 $0$은 아닌(not all zero)** 스칼라 $a_1, \dots, a_n$이 존재하여 $a_1 u_1 + \cdots + a_n u_n = 0$ (영벡터의 **비자명 표현, nontrivial representation**)을 만족할 때.
+> - **일차독립 (Linearly Independent):** 일차종속이 아닌 집합. 즉, $a_1 u_1 + \cdots + a_n u_n = 0 \implies a_1 = a_2 = \cdots = a_n = 0$ (영벡터의 **자명한 표현, trivial representation**만 존재)일 때.
+
+> **🧠 Mental Model (생성공간과 일차독립의 본질):**  
+> - **생성공간 $\operatorname{span}(S)$ (Theorem 1.5):** $S$의 벡터들을 이리저리 늘리고 더해서 도달할 수 있는 모든 영역으로, $S$를 품고 있는 무수히 많은 부분공간들 중 '가장 알뜰하고 작은 최소 부분공간'입니다.  
+> - **일차독립:** 어떤 벡터도 다른 멤버들의 조합으로 흉내 낼 수 없는 상태, 즉 집합 내에 '한 명의 잉여 멤버도 없는 순도 100%의 독자적인 상태'를 의미합니다.
+
+- **핵심 정리 요약:**
+  - **Theorem 1.5:** 임의의 $S \subseteq V$에 대해 $\operatorname{span}(S)$는 $S$를 포함하는 **$V$의 가장 작은 부분공간**이다.
+  - **Theorem 1.6 & Corollary:** $S_1 \subseteq S_2 \subseteq V$일 때, $S_1$이 일차종속이면 $S_2$도 일차종속이고, $S_2$가 일차독립이면 $S_1$도 일차독립이다.
+  - **Theorem 1.7 (중복성 판별 정리):** 일차독립인 부분집합 $S \subseteq V$와 $v \in V \setminus S$에 대하여:
+    $$S \cup \{v\} \text{가 일차종속이다} \iff v \in \operatorname{span}(S)$$
+
+### Derivation / Proof
+
+> **🧠 Mental Model (Theorem 1.7: 새 멤버의 잉여성 감지기):**  
+> 이미 독자적인 영역을 개척한 독립 집합 $S$에 새 벡터 $v$를 영입할 때, $v$가 이미 기존 멤버들이 도달할 수 있는 영역($\operatorname{span}(S)$) 안에 살고 있다면 $v$는 새로운 차원을 열지 못하고 '불필요한 잉여(종속)'가 된다는 사실을 판정하는 핵심 정리입니다.
+
+$$\begin{aligned}
+S \cup \{v\} \text{ 일차종속} &\implies a_1 v + \sum_{i=2}^n a_i u_i = 0 \quad (\because S \text{가 일차독립이므로 } v \text{의 계수 } a_1 \neq 0) \\
+&\implies v = \sum_{i=2}^n (-a_1^{-1} a_i) u_i \in \operatorname{span}(S)
+\end{aligned}$$
+
+- **($\Rightarrow$) $S \cup \{v\}$가 일차종속이면 $v \in \operatorname{span}(S)$이다:**
+  - $S \cup \{v\}$의 서로 다른 벡터 $u_1, \dots, u_n$과 $0$이 아닌 스칼라 $a_1, \dots, a_n$이 존재하여 $\sum_{i=1}^n a_i u_i = 0$을 만족합니다.
+  - 만약 모든 $u_i$가 $S$에만 속한다면 $S$가 일차독립이라는 가정에 모순됩니다. 따라서 $u_i$ 중 하나(편의상 $u_1$)는 반드시 $v$여야 합니다.
+  - 즉 $a_1 v + a_2 u_2 + \cdots + a_n u_n = 0$ ($a_1 \neq 0$)이므로 양변에 $a_1^{-1}$을 곱해 정리하면:
+    $$v = -(a_1^{-1}a_2)u_2 - \cdots - (a_1^{-1}a_n)u_n \in \operatorname{span}(S)$$
+
+- **($\Leftarrow$) $v \in \operatorname{span}(S)$이면 $S \cup \{v\}$는 일차종속이다:**
+  - $v \in \operatorname{span}(S)$이므로 $v = b_1 v_1 + \cdots + b_m v_m$ ($v_i \in S$)으로 쓸 수 있습니다.
+  - 이항하면 $b_1 v_1 + \cdots + b_m v_m + (-1)v = 0$이 됩니다.
+  - $v \notin S$이므로 $v \neq v_i$ ($\forall i$)이고, $v$의 계수가 $-1 \neq 0$이므로 $\{v_1, \dots, v_m, v\} \subseteq S \cup \{v\}$는 일차종속입니다. 따라서 Theorem 1.6에 의해 $S \cup \{v\}$도 일차종속입니다.
+
+> **💡 Intuition / Note:**  
+> 어떤 벡터가 다른 벡터들의 일차결합인지 하나씩 연립방정식을 세워 확인하려면 최대 $k$번의 연립방정식을 풀어야 하지만, 이를 **$\sum a_i u_i = 0$이라는 단 하나의 동차(homogeneous) 연립방정식의 비자명해 존재 여부**로 바꾼 것이 '일차종속/독립' 정의의 놀라운 효율성입니다.
+
+> 🌉 **Bridge (3절 $\to$ 4절):**  
+> 공간 전체를 빈틈없이 채우는 '생성 능력'과 잉여 벡터가 전혀 없는 '독립성'이 만나는 교집합—그것이 바로 벡터공간의 뼈대인 **기저(Basis)**입니다. 이제 기저의 크기가 왜 항상 불변하는지(차원)를 증명하는 1장의 가장 강력한 엔진, **대체 정리(Replacement Theorem)**로 들어갑니다.
+
+---
+
+## 4. Sec 1.6 ~ 1.7* Bases, Dimension, and Maximal Independent Subsets
+
+### Concept / Setup
+
+> **📌 Definition (Basis & Dimension):**  
+> - **기저 (Basis):** 벡터공간 $V$의 부분집합 $\beta \subseteq V$가 **(1) 일차독립**이고 **(2) $V$를 생성($\operatorname{span}(\beta) = V$)**할 때 $\beta$를 $V$의 **기저**라 한다.
+> - **차원 (Dimension):** 유한기저를 가지는 벡터공간 $V$를 **유한차원(finite-dimensional)**이라 하며, 모든 기저가 공통으로 가지는 원소의 개수 $n$을 $V$의 **차원($\dim(V) = n$)**이라 정의한다 (단, $\dim(\{0\}) = 0$, 기저는 $\emptyset$).
+
+```mermaid
+flowchart TD
+    subgraph V ["유한차원 벡터공간 V (dim(V) = n)"]
+        G["생성집합 (Generating Set G)<br/>|G| ≥ n"] -->|"불필요한 종속 벡터 제거<br/>(Theorem 1.9 축소)"| B["기저 (Basis β)<br/>일차독립 ∩ 생성집합<br/>|β| = n (Corollary 1 & 2)"]
+        L["일차독립 집합 (Linearly Independent Set L)<br/>|L| ≤ n"] -->|"독립인 벡터 추가<br/>(Corollary 2(c) 확장)"| B
+    end
+```
+
+- **Chapter 1의 핵심 정리 체계:**
+  - **Theorem 1.8 (기저의 유일 표현성):** $\beta = \{u_1, \dots, u_n\}$이 $V$의 기저일 필요충분조건은 모든 $v \in V$가 유일한 스칼라 $a_1, \dots, a_n$에 의해 $v = \sum_{i=1}^n a_i u_i$로 표현되는 것이다.
+  - **Theorem 1.10 (Replacement Theorem, 대체 정리):** 크기가 $n$인 집합 $G$가 $V$를 생성하고, 크기가 $m$인 집합 $L$이 일차독립이면, (1) $m \le n$이고 **(2) $G$의 부분집합 $H$ ($|H| = n - m$)가 존재하여 $L \cup H$가 $V$를 생성**한다.
+  - **Corollaries of Replacement Theorem ($\dim(V) = n$일 때):**
+    - **Corollary 1:** $V$의 모든 기저는 유한집합이며 정확히 $n$개의 벡터를 가진다.
+    - **Corollary 2 (3대 판정법):**  
+      (a) 유한 생성집합은 최소 $n$개의 벡터를 가지며 정확히 $n$개이면 기저이다.  
+      (b) 정확히 $n$개의 벡터를 가진 일차독립 집합은 기저이다.  
+      (c) 모든 일차독립 부분집합은 기저로 확장(extend)될 수 있다.
+  - **Theorem 1.11 (부분공간의 차원):** 유한차원 공간 $V$의 부분공간 $W$에 대해 $\dim(W) \le \dim(V)$이며, $\dim(W) = \dim(V) \iff W = V$이다.
+  - **Sec 1.7\* (Hausdorff Maximal Principle & Theorem 1.12~1.13):** 수학적 귀납법을 쓸 수 없는 무한차원 공간(예: $P(F)$, $\mathbb{Q}$ 위의 벡터공간 $\mathbb{R}$)에서도 **하우스도르프 극대 원리**를 적용하면 모든 일차독립 집합을 극대 일차독립 부분집합(Maximal Linearly Independent Subset, 즉 기저)으로 확장할 수 있다. 따라서 **모든 벡터공간은 기저를 가진다.**
+
+> **🧠 Mental Model (차원의 유일성과 3대 판정 지름길):**  
+> 대체 정리 덕분에 "어떤 기저를 고르든 원소의 개수는 무조건 $n$개로 고정된다"는 차원($\dim(V)$)의 절대성이 보장됩니다. 또한 $n$차원 공간에서는 크기가 $n$인 집합에 대해 **'독립성'과 '생성 능력' 중 딱 하나만 확인해도 나머지 하나가 자동으로 따라오는(Corollary 2)** 강력한 계산적 지름길이 열립니다.
+
+| **벡터공간 $V$** | **표준 기저 (Standard Basis) $\beta$** | **차원 $\dim_F(V)$** |
 |---|---|---|
-| $\mathbb F^n$ | $n$-튜플 | 성분별 덧셈·곱셈 |
-| $M_{m\times n}(\mathbb F)$ | $m\times n$ 행렬 | 성분별 연산 |
-| $\mathcal F(S,\mathbb F)$ | 함수 $f:S\to\mathbb F$ | 점별 연산 |
-| $P(\mathbb F)$ | $\mathbb F$ 계수 다항식 | 다항식의 합·스칼라배 |
-| 수열공간 | $\mathbb F$ 값 수열 $(a_n)$ | 항별 연산 |
+| 영벡터공간 $\{0\}$ | $\emptyset$ | $0$ |
+| 순서쌍 공간 $F^n$ | $\{e_1, e_2, \dots, e_n\}$ | $n$ |
+| 행렬 공간 $M_{m \times n}(F)$ | $\{E^{ij} : 1 \le i \le m, 1 \le j \le n\}$ | $mn$ |
+| 대칭행렬 공간 $W_{\text{sym}} \subseteq M_{n \times n}(F)$ | $\{A^{ij} : 1 \le i \le j \le n\}$ | $\frac{1}{2}n(n+1)$ |
+| 대각합이 $0$인 행렬 ($\operatorname{tr}(A)=0$) | $\{E^{ij} (i \neq j)\} \cup \{E^{ii} - E^{nn} (i < n)\}$ | $n^2 - 1$ |
+| 다항식 공간 $P_n(F)$ | $\{1, x, x^2, \dots, x^n\}$ (또는 라그랑주 기저) | $n + 1$ |
+| 전체 다항식 공간 $P(F)$ | $\{1, x, x^2, \dots\}$ | $\infty$ (무한차원) |
+| 복소수 공간 $\mathbb{C}$ (체 $F=\mathbb{C}$ vs $F=\mathbb{R}$) | $\{1\}$ (over $\mathbb{C}$) / $\{1, i\}$ (over $\mathbb{R}$)| $1$ (over $\mathbb{C}$) / $2$ (over $\mathbb{R}$) |
 
-함수공간의 경우, 예를 들면
+### Derivation / Proof: Replacement Theorem (Theorem 1.10)
 
-$$
-(f+g)(s)=f(s)+g(s),\qquad (cf)(s)=c f(s).
-$$
+> **🧠 Mental Model (대체 정리: 방 안의 가구 갈아 끼우기):**  
+> 이미 방 전체를 채우고 있는 가구들($G$, 크기 $n$)이 있을 때, 내가 새로 가져온 필수 가구들($L$, 크기 $m$)을 방에 하나씩 들여놓으면서 기존 가구 중 불필요해진 것을 1:1로 맞바꿔(replace) 밖으로 빼내는 작업입니다. 새 가구를 다 넣을 때까지 기존 가구가 부족할 수 없으므로 당연히 **$m \le n$**이어야 하고, 방 전체를 채우는 능력($V$ 생성)은 끝까지 보존됩니다.
 
-따라서 $f$ 자체가 벡터이고, 각 점에서의 함수값이 '벡터의 좌표'일 필요는 없다. 다항식 공간과 수열공간은 뒤에 **무한차원**의 예로 다시 등장한다.
+- **귀납법의 기준 ($m=0$):**  
+  $L = \emptyset$일 때 $0 \le n$이 성립하며, $H = G$ ($|H| = n - 0 = n$)로 잡으면 $L \cup H = G$가 $V$를 생성합니다.
 
-**반례의 요점:** 같은 집합이라도 덧셈을 비표준적으로 정의하면 VS1이나 VS2가 깨질 수 있다. 집합의 생김새만으로 벡터공간 여부를 판단하지 말자.
+- **귀납 가정:**  
+  어떤 정수 $m \ge 0$에 대해 정리가 성립한다고 가정합니다.
 
-### 1.2.3 Theorem 1.1 — Cancellation Law
+- **귀납 단계 ($m+1$):**  
+  $L = \{v_1, \dots, v_m, v_{m+1}\}$이 크기가 $m+1$인 일차독립 집합이라 합시다.
+  1. $\{v_1, \dots, v_m\}$도 일차독립이므로 귀납 가정에 의해 $m \le n$이고, $G$의 부분집합 $\{u_1, \dots, u_{n-m}\}$이 존재하여 $\{v_1, \dots, v_m} \cup \{u_1, \dots, u_{n-m}\}$이 $V$를 생성합니다.
+  2. 따라서 $v_{m+1} \in V$는 다음과 같이 일차결합으로 표현됩니다:
+     $$a_1 v_1 + \cdots + a_m v_m + b_1 u_1 + \cdots + b_{n-m} u_{n-m} = v_{m+1}$$
+  3. 만약 $n - m = 0$이거나 모든 $b_i = 0$이라면, $v_{m+1} \in \operatorname{span}(\{v_1, \dots, v_m\})$이 되어 Theorem 1.7에 의해 $L$이 일차독립이라는 사실에 모순됩니다.
+  4. 따라서 $n - m > 0$ (즉 $n \ge m+1$)이어야 하며, 적어도 하나의 $b_i$ (편의상 $b_1$)는 $0$이 아닙니다.
+  5. 위 식을 $u_1$에 대해 풀면:
+     $$u_1 = (-b_1^{-1}a_1)v_1 + \cdots + (-b_1^{-1}a_m)v_m + b_1^{-1}v_{m+1} + (-b_1^{-1}b_2)u_2 + \cdots + (-b_1^{-1}b_{n-m})u_{n-m}$$
+  6. 이제 $H = \{u_2, \dots, u_{n-m}\}$ ($|H| = n - (m+1)$)이라 두면 $u_1 \in \operatorname{span}(L \cup H)$이므로 생성집합 $\{v_1, \dots, v_m, u_1, \dots, u_{n-m}\} \subseteq \operatorname{span}(L \cup H)$가 되어 $\operatorname{span}(L \cup H) = V$가 성립합니다. $\blacksquare$
 
-**정리.** $x+z=y+z$이면 $x=y$이다.
+### Example & Visualization: Lagrange Interpolation Formula (Sec 1.6)
 
-**증명.** $z$의 덧셈 역원 $-z$가 존재하므로
+> **🧠 Mental Model (스위치 다항식 기저):**  
+> 원하는 점에서는 $1$, 나머지 점에서는 $0$이 켜지는 크로네커 델타($\delta_{ij}$) '스위치 다항식'들을 기저로 채택함으로써, 복잡한 연립방정식을 풀 필요 없이 목표 함숫값($b_i$)을 스위치 계수로 그대로 곱해 보간 다항식을 한 번에 조립해내는 선형대수의 아름다운 응용입니다.
 
-$$
-\begin{aligned}
-x
-&=x+0_V=x+(z+(-z))\\
-&=(x+z)+(-z)\\
-&=(y+z)+(-z)=y.
-\end{aligned}
-$$
+- **예제 상황 (교재 p. 54 예제):**  
+  서로 다른 $n+1$개의 점 $c_0, c_1, \dots, c_n \in F$에 대하여 라그랑주 다항식(Lagrange Polynomials)을 다음과 같이 정의합니다:
+  $$f_i(x) = \prod_{\substack{k=0 \\ k \neq i}}^{n} \frac{x - c_k}{c_i - c_k} \implies f_i(c_j) = \delta_{ij} = \begin{cases} 0 & (i \neq j) \\ 1 & (i = j) \end{cases}$$
+  이 성질에 의해 $\sum_{i=0}^n a_i f_i(x) = 0$에 $x = c_j$를 대입하면 즉시 $a_j = 0$이 도출되므로, $\beta = \{f_0, f_1, \dots, f_n\}$은 $P_n(F)$의 $n+1$개짜리 일차독립 집합입니다. 그런데 $\dim(P_n(F)) = n+1$이므로, 대체 정리의 따름정리 2(b)에 의해 생성 여부를 따로 계산할 필요 없이 $\beta$는 즉시 $P_n(F)$의 기저가 됩니다.
 
-덧셈의 결합법칙과 역원의 존재만으로 결과가 나온다. $\square$
+- **적용 결과:**  
+  세 점 $(1, 8), (2, 5), (3, -4)$를 지나는 2차 이하의 유일한 다항식 $g(x) \in P_2(\mathbb{R})$는 기저 표현의 계수가 곧 함숫값 $g(c_i) = b_i$가 되어 다음과 같이 결정됩니다:
+  $$\begin{aligned}
+  g(x) &= 8 f_0(x) + 5 f_1(x) - 4 f_2(x) \\
+  &= 8 \cdot \frac{(x-2)(x-3)}{2} + 5 \cdot \frac{(x-1)(x-3)}{-1} - 4 \cdot \frac{(x-1)(x-2)}{2} = -3x^2 + 6x + 5
+  \end{aligned}$$
 
-**따름정리.** 영벡터와 각 벡터의 덧셈 역원은 유일하다.
+![Figure 3: Lagrange Basis and Interpolating Polynomial](attachments/01-fig3-lagrange-interpolation.png)
+_▲ Figure 3: (좌) 크로네커 델타 성질 $f_i(c_j) = \delta_{ij}$를 만족하는 $P_2(\mathbb{R})$의 라그랑주 기저 다항식 $f_0, f_1, f_2$ 개형, (우) 이들의 일차결합 $g = 8f_0 + 5f_1 - 4f_2$로 유일하게 복원된 보간 다항식 $g(x) = -3x^2 + 6x + 5$_
 
-예를 들어 $0$과 $0'$가 모두 영벡터라면 $0=0+0'=0'$이므로 하나뿐이다. $x+y=x+z=0$인 역원 $y,z$ 역시 소거법칙으로 같다.
-
-### 1.2.4 Theorem 1.2 — 스칼라곱의 기본 성질
-
-교재에서 특히 다음 세 가지를 증명한다.
-
-$$
-0_{\mathbb F}x=0_V,\qquad
-(-a)x=-(ax)=a(-x),\qquad
-a0_V=0_V.
-$$
-
-**첫 번째의 증명.**
-
-$$
-(0_{\mathbb F}+0_{\mathbb F})x
-=0_{\mathbb F}x+0_{\mathbb F}x.
-$$
-
-왼쪽은 $0_{\mathbb F}x$이므로 소거법칙을 적용하면 $0_{\mathbb F}x=0_V$.
-
-**세 번째의 증명.** $a(0_V+0_V)=a0_V+a0_V$인데 왼쪽은 $a0_V$이므로 역시 소거하면 된다.
-
-**두 번째의 증명.** $(a+(-a))x=0_V$이므로 $(ax)+(-a)x=0_V$이다. 역원의 유일성 때문에 $(-a)x=-(ax)$. 특히 $(-1)x=-x$이고,
-
-$$
-a(-x)=a((-1)x)=(a(-1))x=(-a)x.
-$$
-
-**핵심:** 영벡터와 마이너스 부호의 성질은 **추가 가정이 아니라 8개 공리의 결과**이다.
+> 🌉 **Bridge (4절 $\to$ 5절):**  
+> 지금까지 확립한 공리, 부분공간, 기저, 차원의 이론적 프레임워크가 체의 표수(Characteristic), 부분공간의 합과 교집합의 차원 공식(Grassmann's Identity), 그리고 몫공간(Quotient Space) 같은 구체적인 문제 상황에서 어떻게 강력하게 적용되는지 확인해 봅니다.
 
 ---
 
-## 1.3 Subspaces — 부분공간 (pp. 17–23)
+## 5. Selected Exercises
 
-### 1.3.1 Definition: Subspace
+- **Exercise 1.5.8 (체의 표수(Characteristic)와 일차독립성):**  
+  $F^3$의 부분집합 $S = \{u_1=(1,1,0), u_2=(1,0,1), u_3=(0,1,1)\}$은 $F = \mathbb{R}$일 때는 일차독립이지만, $\operatorname{char}(F) = 2$ (예: $F = \mathbb{Z}_2$)일 때는 일차종속임을 보여라.
+  - **풀이 핵심:** $a_1 u_1 + a_2 u_2 + a_3 u_3 = (a_1+a_2, a_1+a_3, a_2+a_3) = (0,0,0)$을 풀면 $a_1 = -a_2 = a_3 = -a_1 \implies 2a_1 = 0$을 얻습니다. $F = \mathbb{R}$에서는 $2 \neq 0$이므로 $a_1=a_2=a_3=0$ (일차독립)이지만, $\operatorname{char}(F) = 2$인 체에서는 $1+1=0$이므로 $a_1 = a_2 = a_3 = 1 \neq 0$을 대입하면 $1u_1 + 1u_2 + 1u_3 = (0,0,0)$이 되어 일차종속이 됩니다.
 
-$W\subseteq V$가 $V$의 덧셈과 스칼라곱을 그대로 사용하면서 벡터공간이 되면 $W$를 $V$의 **부분공간(subspace)**이라고 한다.
+- **Exercise 1.6.29 (부분공간의 합의 차원 공식 — Grassmann's Identity):**  
+  유한차원 벡터공간 $V$의 두 부분공간 $W_1, W_2$에 대하여 다음이 성립함을 증명하라:
+  $$\dim(W_1 + W_2) = \dim(W_1) + \dim(W_2) - \dim(W_1 \cap W_2)$$
+  - **풀이 핵심:** $W_1 \cap W_2$의 기저 $\alpha = \{u_1, \dots, u_k\}$를 잡은 뒤, Theorem 1.11의 따름정리(기저 확장)를 이용해 이를 $W_1$의 기저 $\beta_1 = \{u_1, \dots, u_k, v_1, \dots, v_m\}$과 $W_2$의 기저 $\beta_2 = \{u_1, \dots, u_k, w_1, \dots, w_p\}$로 각각 확장합니다. 그 후 합집합 $\beta = \{u_1, \dots, u_k, v_1, \dots, v_m, w_1, \dots, w_p\}$가 $W_1 + W_2$를 생성하고 일차독립임을 보이면 $\dim(W_1 + W_2) = k + m + p = (k+m) + (k+p) - k$가 증명됩니다. 특히 $V = W_1 + W_2$일 때 $V = W_1 \oplus W_2 \iff \dim(V) = \dim(W_1) + \dim(W_2)$입니다.
 
-부분집합이 이미 $V$의 많은 공리를 상속하기 때문에, 8개 공리를 다시 확인할 필요는 없다.
-
-### 1.3.2 Theorem 1.3 — Subspace Test
-
-$W\subseteq V$가 부분공간인 필요충분조건은 다음 세 가지다.
-
-$$
-0_V\in W,
-$$
-
-$$
-x,y\in W\implies x+y\in W,
-$$
-
-$$
-a\in\mathbb F,\ x\in W\implies ax\in W.
-$$
-
-**증명 방향.**
-
-- 부분공간이면 위 성질들이 정의로부터 성립한다.
-- 반대로 세 성질이 성립하면 $-x=(-1)x\in W$이므로 역원도 갖는다.
-- 나머지 벡터공간 공리는 $V$로부터 상속된다. 따라서 $W$는 부분공간이다. $\square$
-
-동치인 간단한 판별법은 **$W\ne\varnothing$이고 모든 $x,y\in W$, $a,b\in\mathbb F$에 대해 $ax+by\in W$**인지 확인하는 것이다(교재 §1.3의 연습문제로도 등장).
-
-### 1.3.3 예시와 반례
-
-- $P_n(\mathbb F)=\{p:\deg p\le n\}\cup\{0\}$는 $P(\mathbb F)$의 부분공간이다.
-- 연속 실함수의 집합 $C(\mathbb R)$는 모든 실함수 공간의 부분공간이다.
-- 대칭 행렬 집합 $\{A:A^\mathsf T=A\}$는 $M_n(\mathbb F)$의 부분공간이다.
-- 대각행렬 집합, 자취(trace)가 $0$인 정사각행렬 집합도 부분공간이다.
-- 모든 원소가 음이 아닌 실수 행렬들의 집합은 일반적으로 부분공간이 아니다. 음수배에 닫혀 있지 않기 때문이다.
-
-특히 $W=\{(x,y)\in\mathbb R^2:x+y=1\}$은 직선이지만 **원점을 포함하지 않으므로** 부분공간이 아니다. 반면 $x+y=0$은 부분공간이다.
-
-### 1.3.4 Theorem 1.4 — 부분공간의 교집합
-
-**정리.** 같은 벡터공간 $V$의 부분공간들을 임의로 교집합해도 부분공간이다.
-
-**증명.** $W=\bigcap_{\alpha\in I}W_\alpha$로 놓자. 모든 $W_\alpha$가 $0_V$를 포함하므로 $0_V\in W$. $x,y\in W$라면 각각의 $W_\alpha$에 속하므로 $x+y,ax$ 또한 각각에 속한다. 따라서 $W$는 부분공간이다. $\square$
-
-그러나 **합집합은 일반적으로 부분공간이 아니다.** 예를 들어
-
-$$
-W_1=\{(x,0):x\in\mathbb R\},\qquad
-W_2=\{(0,y):y\in\mathbb R\}.
-$$
-
-$(1,0),(0,1)\in W_1\cup W_2$이지만 $(1,1)\notin W_1\cup W_2$이다.
-
-### 1.3.5 Direct Sum — 이 절의 연습문제에서 도입
-
-$W_1,W_2$가 부분공간이라면 그 **합**을
-
-$$
-W_1+W_2=\{w_1+w_2:w_i\in W_i\}
-$$
-
-로 정의한다. 만약
-
-$$
-V=W_1+W_2,\qquad W_1\cap W_2=\{0\},
-$$
-
-이면 $V=W_1\oplus W_2$라고 쓴다.
-
-**왜 교집합이 $\{0\}$이어야 할까?** $v=w_1+w_2=w_1'+w_2'$라면
-
-$$
-w_1-w_1'=w_2'-w_2\in W_1\cap W_2.
-$$
-
-교집합이 $\{0\}$이면 $w_1=w_1'$, $w_2=w_2'$이다. 즉, **직합에서는 분해가 유일**하다.
+- **Exercise 1.3.31 & 1.6.35 (몫공간 Quotient Space $V/W$와 차원):**  
+  부분공간 $W \subseteq V$에 의한 잉여류(coset)들의 집합 $V/W = \{v + W : v \in V\}$에 덧셈 $(v_1+W)+(v_2+W) = (v_1+v_2)+W$와 스칼라 곱 $a(v+W) = av+W$를 정의하면 $V/W$는 벡터공간이 되며, $\dim(V/W) = \dim(V) - \dim(W)$이다.
+  - **풀이 핵심:** $W$의 기저 $\{u_1, \dots, u_k\}$를 $V$의 기저 $\{u_1, \dots, u_k, u_{k+1}, \dots, u_n\}$으로 확장하면, $\beta_{V/W} = \{u_{k+1}+W, \dots, u_n+W\}$가 $V/W$의 기저가 됨을 보일 수 있습니다. 이는 2장의 차원 정리(Rank-Nullity Theorem)의 원형이 됩니다.
 
 ---
 
-## 1.4 Linear Combinations and Systems of Linear Equations (pp. 24–35)
+## 6. Summary & Discussion Points
 
-### 1.4.1 Definition: Linear Combination
+- **Takeaway 1 (추상화의 위력):**  
+  벡터공간 공리 (VS 1)~(VS 8)를 만족하는 모든 대상(행렬, 다항식, 연속함수, 미분방정식의 해집합 등)은 기하학적 유클리드 공간 $\mathbb{R}^n$과 완전히 동일한 선형 구조를 공유한다.
 
-$S\subseteq V$의 유한한 벡터 $v_1,\ldots,v_k$와 스칼라 $a_1,\ldots,a_k$를 사용한
+- **Takeaway 2 (대체 정리와 차원의 불변성):**  
+  일차독립 집합의 크기 $m$은 결코 생성집합의 크기 $n$을 넘을 수 없다($m \le n$). 이 하나의 부등식(Replacement Theorem)으로부터 차원 $\dim(V)$의 유일성, 기저 축소/확장 가능성, 그리고 "$n$차원 공간에서는 일차독립과 생성 중 하나만 확인해도 크기가 $n$이면 기저가 된다"는 강력한 계산적 지름길이 도출된다.
 
-$$
-v=a_1v_1+\cdots+a_kv_k
-$$
-
-를 **선형결합(linear combination)**이라고 한다. 여기서 **유한 개의 항만 사용한다**는 점이 중요하다. 무한합의 수렴은 Chapter 1의 순수 대수적 정의에 포함되지 않는다.
-
-### 1.4.2 Definition: Span
-
-$$
-\operatorname{span}(S)
-=\left\{\sum_{i=1}^{k}a_iv_i:
-k\ge1,\ v_i\in S,\ a_i\in\mathbb F\right\}
-$$
-
-이고, 편의상 $\operatorname{span}(\varnothing)=\{0_V\}$로 정의한다.
-
-$\operatorname{span}(S)=V$이면 $S$가 $V$를 **생성한다(spans or generates)**고 한다.
-
-**예시.** $u=(1,0,1)$, $v=(0,1,1)$이면
-
-$$
-\operatorname{span}\{u,v\}
-=\{(a,b,a+b):a,b\in\mathbb R\}.
-$$
-
-따라서 $(2,3,5)$는 이 Span에 속하지만 $(2,3,4)$는 속하지 않는다. 선형결합 여부를 확인하는 문제는 결국 **연립일차방정식의 해 존재 여부**로 환원된다.
-
-### 1.4.3 Theorem 1.5 — Span은 가장 작은 부분공간
-
-**정리.** $\operatorname{span}(S)$는 $S$를 포함하는 부분공간이고, $S$를 포함하는 다른 모든 부분공간 $W$에 대해
-
-$$
-\operatorname{span}(S)\subseteq W
-$$
-
-가 성립한다.
-
-**증명.**
-
-1. $S=\varnothing$이면 Span은 $\{0\}$이므로 자명하다.
-2. $S\ne\varnothing$이면 $0_V=0v\in\operatorname{span}(S)$.
-3. 두 선형결합의 합과 선형결합의 스칼라배는 다시 선형결합이므로, Span은 부분공간이다.
-4. $s=1\cdot s$이므로 $S\subseteq\operatorname{span}(S)$.
-5. 다른 부분공간 $W$가 $S$를 포함하면, 덧셈 및 스칼라배에 닫혀 있기 때문에 $S$의 모든 선형결합 역시 $W$에 속한다. $\square$
-
-따라서
-
-$$
-\operatorname{span}(S)
-=\bigcap_{\substack{W\le V\\S\subseteq W}}W
-$$
-
-로도 이해할 수 있다. **Span은 $S$를 넣고 부분공간을 유지하도록 닫았을 때 얻어지는 최소 구조**이다.
-
-### 1.4.4 연립방정식과의 연결
-
-$\sum_j a_jv_j=w$라는 조건을 좌표별로 쓰면 연립일차방정식이 된다. §1.4는 소거법을 도입하고, 행 교환·영이 아닌 스칼라배·다른 행의 배를 더하는 변형을 이용하여 **같은 해집합을 갖는 더 단순한 식**을 얻는 방법을 보인다. 일반적인 행렬 이론과 엄밀한 정당화는 Chapter 3에서 다룬다.
-
-**발표 질문:** $S$의 벡터가 많아질수록 $\operatorname{span}(S)$가 반드시 커질까? → $S\subseteq T$이면 $\operatorname{span}(S)\subseteq\operatorname{span}(T)$이지만, 이미 존재하는 벡터의 선형결합을 추가해도 Span은 변하지 않는다.
+> **❓ Question / Discussion:**  
+> 1. 1.6절의 라그랑주 보간법 증명에서, 다항식들이 $P_n(F)$를 생성(span)하는지 직접 연립방정식을 풀지 않고도 단지 **'일차독립인 다항식이 $n+1$개 있다'**는 사실만으로 모든 다항식을 보간할 수 있음을 증명했습니다. 이처럼 '존재성(생성)' 증명을 '유일성(일차독립)' 증명으로 대체할 수 있는 원리는 이후 2장의 선형변환(Theorem 2.5: $\dim(V)=\dim(W)$일 때 단사 $\iff$ 전사)과 어떻게 연결될까요?
+> 2. 1.7절에서 실수 집합 $\mathbb{R}$을 유리수 체 $\mathbb{Q}$ 위의 벡터공간으로 볼 때(Exercise 1.7.3), 하우스도르프 극대 원리(선택 공리)는 기저(Hamel Basis)의 존재를 보장하지만 우리는 그 기저를 명시적으로 적어낼 수 없습니다. 유한차원에서의 귀납적 기저 확장(Corollary 2(c))과 무한차원에서의 초한귀납적(Zorn's Lemma / Hausdorff) 기저 확장은 어떤 본질적 차이가 있을까요?
 
 ---
 
-## 1.5 Linear Dependence and Linear Independence (pp. 36–42)
+## 7. References
 
-### 1.5.1 Definitions
-
-벡터들의 집합 $S$가 **선형종속(linearly dependent)**이라는 뜻은, 서로 다른 유한 개의 $v_i\in S$에 대해 모두 $0$은 아닌 계수 $a_i$가 존재하여
-
-$$
-a_1v_1+\cdots+a_kv_k=0_V
-$$
-
-가 성립한다는 것이다.
-
-이러한 비자명한 영벡터 표현이 **없다면** $S$는 **선형독립(linearly independent)**이다.
-
-따라서 유한 집합 $\{v_1,\ldots,v_k\}$가 독립이라는 말은
-
-$$
-\sum_{i=1}^k a_i v_i=0_V
-\quad\Longrightarrow\quad
-a_1=\cdots=a_k=0
-$$
-
-와 동치다.
-
-기본적인 사실:
-
-- $\varnothing$은 선형독립이다.
-- $0_V$를 포함하는 집합은 선형종속이다.
-- 하나의 영이 아닌 벡터로 이루어진 집합은 선형독립이다.
-- 유한 집합이 종속이면, **적어도 하나의 벡터를 나머지의 선형결합으로 표현**할 수 있다.
-
-### 1.5.2 Theorem 1.6 — 종속성의 확대
-
-**정리.** $S_1\subseteq S_2$이고 $S_1$이 종속이면 $S_2$ 역시 종속이다.
-
-**이유.** $S_1$에서 얻은 비자명한 영벡터 선형결합이 그대로 $S_2$에도 존재한다.
-
-**따름정리.** 독립인 집합의 모든 부분집합은 독립이다.
-
-### 1.5.3 Theorem 1.7 — 언제 벡터 하나를 추가하면 종속이 될까?
-
-$S$가 선형독립이고 $v\notin S$라면
-
-$$
-S\cup\{v\}\text{가 선형종속}
-\quad\Longleftrightarrow\quad
-v\in\operatorname{span}(S).
-$$
-
-**증명 ($\Rightarrow$).** $S\cup\{v\}$의 비자명한 영벡터 관계에서 $v$의 계수는 반드시 영이 아니어야 한다. 그렇지 않으면 $S$ 자체가 종속이 된다. 따라서 그 관계식을 $v$에 대해 정리하면 $v$가 $S$의 선형결합이다.
-
-**증명 ($\Leftarrow$).** $v=\sum_i a_i s_i$이면
-
-$$
-\sum_i a_i s_i-v=0_V
-$$
-
-는 $v$의 계수가 $-1$인 비자명한 관계이므로 종속이다. $\square$
-
-이 정리가 **불필요한 생성벡터를 제거하는 방법**과 다음 절의 기저 존재 정리를 연결한다.
-
-### 1.5.4 체(field)를 바꾸면 독립성도 바뀔 수 있다
-
-교재 §1.5의 연습문제를 바탕으로,
-
-$$
-u=(1,1,0),\quad v=(1,0,1),\quad w=(0,1,1)
-$$
-
-를 살펴보자. 이 세 벡터를 열로 놓은 행렬의 행렬식은 $-2$이므로 **$\mathbb R$ 위에서는 독립**이다. 하지만 $\mathbb Z_2$ 위에서는 $u+v+w=0$이므로 **종속**이다.
-
-**주의:** 벡터공간의 구조는 벡터의 집합뿐 아니라 선택한 **스칼라 체**에도 의존한다.
-
----
-
-## 1.6 Bases and Dimension (pp. 43–58)
-
-### 1.6.1 Definition: Basis
-
-$\mathcal B\subseteq V$가 다음 두 조건을 동시에 만족하면 **기저(basis)**이다.
-
-$$
-\operatorname{span}(\mathcal B)=V,
-\qquad \mathcal B \text{ is linearly independent}.
-$$
-
-첫 조건은 **충분한 벡터**가 있다는 뜻이고, 두 번째는 **불필요한 벡터가 없다**는 뜻이다.
-
-대표적인 기저:
-
-- $\mathbb F^n$: $\{e_1,\ldots,e_n\}$
-- $P_n(\mathbb F)$: $\{1,x,\ldots,x^n\}$
-- $M_{m\times n}(\mathbb F)$: 각 위치에 하나의 $1$만 있는 행렬들 $\{E_{ij}\}$
-- 영벡터공간 $\{0\}$: 공집합 $\varnothing$
-
-### 1.6.2 Theorem 1.8 — 기저와 유일한 좌표표현
-
-서로 다른 $v_1,\ldots,v_n$에 대해 $\mathcal B=\{v_1,\ldots,v_n\}$가 기저인 것과, 모든 $v\in V$가 유일한 스칼라 $a_1,\ldots,a_n$에 의해
-
-$$
-v=\sum_{i=1}^n a_i v_i
-$$
-
-로 표현되는 것은 동치이다.
-
-**증명.**
-
-- 기저라면 Span 조건에 의해 표현은 **존재**한다.
-- 같은 벡터에 대한 두 표현 $\sum_i a_iv_i=\sum_i b_iv_i$를 빼면 $\sum_i(a_i-b_i)v_i=0$.
-- 선형독립성에 의해 $a_i=b_i$가 되어 **유일**하다.
-- 반대로 표현이 언제나 존재하고 유일하다면, 존재성은 Span 조건, 영벡터 표현의 유일성은 선형독립 조건을 준다. $\square$
-
-이 정리는 Chapter 2에서 벡터를 **좌표벡터**로 나타내는 이론의 기반이 된다.
-
-### 1.6.3 Theorem 1.9 — 유한 생성집합은 기저로 줄일 수 있다
-
-$V$가 유한 집합 $S$에 의해 생성되면, $S$의 어떤 부분집합은 $V$의 기저다.
-
-**증명 아이디어.**
-
-1. $S$가 독립이면 그대로 기저다.
-2. 종속이면 일부 벡터를 나머지의 선형결합으로 표현할 수 있으므로 그 벡터를 삭제해도 Span은 변하지 않는다.
-3. $S$가 유한하므로, 이 과정을 유한 번 반복하면 독립인 생성집합이 남는다. $\square$
-
-반대로 **선형독립인 집합에 새로운 벡터를 추가**하면 기저를 완성할 수 있다(아래 교체정리의 따름정리).
-
-### 1.6.4 Theorem 1.10 — Replacement Theorem (교체정리)
-
-**가정:** $G$는 정확히 $n$개의 원소로 $V$를 생성하며, $L$은 정확히 $m$개의 선형독립인 벡터로 이루어져 있다.
-
-**결론:**
-
-$$
-m\le n
-$$
-
-이고, $G$의 벡터 중 정확히 $n-m$개를 골라 만든 집합 $H$가 존재하여 **$L\cup H$가 $V$를 생성**한다.
-
-이것이 왜 중요한가? 생성집합의 벡터들을 **독립인 벡터들로 하나씩 교체**해도 전체 공간을 계속 생성하도록 만들 수 있다는 뜻이다.
-
-**증명 구성 (귀납적 교체 과정).**
-
-1. $L=\varnothing$이면 $H=G$로 잡으면 된다.
-2. $L=\{\ell_1,\ldots,\ell_m\}$을 독립이라고 하자. $\ell_1$은 $G$의 선형결합이므로, 계수가 영이 아닌 어떤 $g_j$가 존재한다. 그 식을 $g_j$에 대해 풀면 $g_j$를 $\ell_1$과 나머지 $G$로 나타낼 수 있다. 따라서 $g_j$를 $\ell_1$로 **교체해도 Span은 유지**된다.
-3. 이미 $\ell_1,\ldots,\ell_k$를 포함하는 생성집합을 얻었다고 하자. $\ell_{k+1}$은 이 생성집합의 선형결합이다. 이때 아직 남아 있는 원래의 $G$ 벡터 중 적어도 하나의 계수가 영이 아니어야 한다. 그렇지 않다면 $\ell_{k+1}\in\operatorname{span}\{\ell_1,\ldots,\ell_k\}$가 되어 $L$의 독립성과 모순이다.
-4. 그러므로 다음 원래의 생성벡터 하나를 $\ell_{k+1}$로 교체할 수 있다. 이 과정을 $m$회 수행하면 원래 $G$에서 $n-m$개가 남고, $L$과 함께 $V$를 생성한다.
-5. 한 단계마다 원래 생성벡터가 하나씩 필요하므로 $m\le n$이다. $\square$
-
-**핵심 논리:** 독립인 집합의 크기는 어떤 유한 생성집합의 크기보다 클 수 없다.
-
-### 1.6.5 교체정리의 따름정리 — 차원은 왜 잘 정의되는가?
-
-$\mathcal B_1,\mathcal B_2$가 같은 유한차원 공간 $V$의 기저이고, 각각 $n,m$개의 벡터를 갖는다면
-
-- $\mathcal B_1$은 생성집합, $\mathcal B_2$는 독립집합이므로 $m\le n$.
-- 반대로 역할을 바꾸면 $n\le m$.
-
-따라서
-
-$$
-n=m.
-$$
-
-즉, **기저의 선택과 무관하게 기저 벡터의 개수가 일정**하다. 이를 $\dim V$라 정의한다.
-
-$$
-\dim\mathbb F^n=n,\qquad
-\dim P_n(\mathbb F)=n+1,\qquad
-\dim M_{m\times n}(\mathbb F)=mn.
-$$
-
-흥미로운 예:
-
-$$
-\dim_{\mathbb C}\mathbb C=1,
-\qquad \dim_{\mathbb R}\mathbb C=2.
-$$
-
-실수 위에서는 $\{1,i\}$가 기저이므로, 같은 대상이라도 **스칼라 체가 바뀌면 차원도 바뀐다**.
-
-### 1.6.6 크기만으로 기저를 판정하는 법
-
-$\dim V=n$이라면 교체정리의 따름정리로 다음이 성립한다.
-
-- $V$를 생성하는 **정확히 $n$개**의 벡터는 기저다.
-- 서로 독립인 **정확히 $n$개**의 벡터도 기저다.
-- 독립인 집합의 크기는 최대 $n$, 유한 생성집합의 크기는 최소 $n$이다.
-- 모든 독립집합은 적절한 벡터를 추가해 기저로 확장할 수 있다.
-
-따라서 $n$차원 공간에서 이미 $n$개를 확보했다면 **독립성 또는 생성성 중 하나만 증명**해도 충분하다.
-
-### 1.6.7 Theorem 1.11 — 부분공간의 차원
-
-$V$가 유한차원이고 $W\le V$라면 $W$도 유한차원이며
-
-$$
-\dim W\le\dim V.
-$$
-
-또한
-
-$$
-\dim W=\dim V\quad\Longrightarrow\quad W=V.
-$$
-
-**증명.** $W$에서 가능한 한 독립인 벡터들을 선택한다. 이 집합은 $V$에서도 독립이므로 $\dim V$개를 초과할 수 없다. 더 이상 $W$의 독립인 벡터를 추가할 수 없다면 Theorem 1.7에 의해 그 집합이 $W$를 생성하므로 기저다. 특히 그 크기가 $\dim V$라면 $V$ 전체를 생성하는 기저이므로 $W=V$. $\square$
-
-**응용 예 — 대칭 행렬의 차원.**
-
-대칭 $n\times n$ 행렬은 대각 원소가 $n$개이고, 비대각 원소는 대칭인 두 위치가 한 자유도로 묶인다. 따라서
-
-$$
-\dim\operatorname{Sym}_n(\mathbb F)
-=n+\frac{n(n-1)}2=\frac{n(n+1)}2.
-$$
-
-### 1.6.8 [추가 연습문제] 부분공간의 합과 차원
-
-교재 §1.6 Exercise 29가 다루는 결과:
-
-$$
-\dim(W_1+W_2)
-=\dim W_1+\dim W_2-\dim(W_1\cap W_2).
-$$
-
-**증명 개요.** 교집합 $W_1\cap W_2$의 기저 $u_1,\ldots,u_k$를 선택하고, 이를 각 부분공간의 기저로 확장한다.
-
-$$
-\mathcal B_1=\{u_1,\ldots,u_k,v_1,\ldots,v_r\},
-$$
-
-$$
-\mathcal B_2=\{u_1,\ldots,u_k,w_1,\ldots,w_s\}.
-$$
-
-두 기저를 합쳐 중복된 $u_i$를 한 번씩만 남긴 집합은 $W_1+W_2$를 생성한다. 이 집합이 독립인지 확인하려면
-
-$$
-\sum_i a_i u_i+\sum_j b_jv_j+\sum_\ell c_\ell w_\ell=0
-$$
-
-에서 $\sum_\ell c_\ell w_\ell\in W_1\cap W_2$임을 이용한다. $\mathcal B_2$의 독립성으로 모든 $c_\ell=0$이고, 이어서 $\mathcal B_1$의 독립성으로 $a_i=b_j=0$이다. 따라서 기저의 크기가 $k+r+s$가 되어 공식이 성립한다.
-
-**직합인 경우** 교집합 차원이 $0$이므로 $\dim(W_1\oplus W_2)=\dim W_1+\dim W_2$.
-
-### 1.6.9 Lagrange Interpolation — Chapter 1의 응용 (pp. 52–54)
-
-서로 다른 $c_0,\ldots,c_n\in\mathbb F$에 대해
-
-$$
-\ell_i(x)=\prod_{\substack{0\le j\le n\\j\ne i}}
-\frac{x-c_j}{c_i-c_j}
-$$
-
-를 정의하면
-
-$$
-\ell_i(c_j)=
-\begin{cases}
-1 & i=j,\\
-0 & i\ne j.
-\end{cases}
-$$
-
-따라서 $\ell_0,\ldots,\ell_n$이 선형독립이라는 것은 $\sum_i a_i\ell_i(x)=0$에 차례로 $x=c_j$를 대입하면 곧바로 $a_j=0$이 됨을 통해 확인할 수 있다.
-
-$\dim P_n(\mathbb F)=n+1$이므로 이들은 $P_n(\mathbb F)$의 기저다. 결과적으로 $n+1$개의 값 $y_i$를 만족하는 차수 $\le n$의 다항식은
-
-$$
-p(x)=\sum_{i=0}^n y_i\ell_i(x)
-$$
-
-로 **유일하게** 표현된다.
-
-**직접 확인:** $(0,1)$, $(1,2)$, $(2,5)$를 지나는 2차 이하 다항식은 $p(x)=x^2+1$이다.
-
-즉, **보간은 선형대수의 기저 구성과 좌표표현의 문제**다.
-
----
-
-## 1.7* Maximal Linearly Independent Subsets — 선택 단원 (pp. 59–62)
-
-§1.6에서는 **유한 생성집합**에서 기저를 얻었다. 그렇다면 임의의 무한차원 벡터공간에도 기저가 항상 존재할까?
-
-### 1.7.1 Definition: Maximal Linearly Independent Subset
-
-$B\subseteq S$가 독립이고, $B$를 진부분집합으로 포함하는 다른 독립 부분집합이 $S$ 안에 없다면 $B$를 $S$의 **극대 선형독립 부분집합**이라고 부른다.
-
-여기서 '극대(maximal)'는 **포함관계로 더 확장할 수 없다**는 뜻이지, 원소 수가 가장 큰 집합을 직접 찾아냈다는 뜻은 아니다.
-
-### 1.7.2 Theorem 1.12 — 극대 독립집합이 기저가 되는 이유
-
-$S$가 $V$를 생성하고 $B\subseteq S$가 $S$의 극대 독립집합이면 $B$는 $V$의 기저다.
-
-**증명.** $B$는 이미 독립이다. 만약 $s\in S$ 중 $s\notin\operatorname{span}(B)$인 것이 있으면 Theorem 1.7에 의해 $B\cup\{s\}$도 독립이다. 이는 극대성과 모순이다. 따라서
-
-$$
-S\subseteq\operatorname{span}(B).
-$$
-
-$S$가 $V$를 생성하므로 $B$도 $V$를 생성한다. $\square$
-
-### 1.7.3 Theorem 1.13 — 기저의 존재와 Hausdorff Maximal Principle
-
-교재는 **Hausdorff maximal principle**을 사용해 모든 독립집합이 어떤 극대 독립집합에 포함됨을 보인다.
-
-핵심 단계:
-
-1. 고정된 독립집합 $S$를 포함하는 모든 독립 부분집합들의 모임 $\mathcal F$를 생각한다.
-2. $\mathcal F$ 안의 포함관계 사슬(chain)을 택하고, 그 원소들의 합집합 $U$를 만든다.
-3. $U$의 임의의 **유한한** 벡터들 사이의 관계는 사슬의 어느 한 원소 안에서 검사할 수 있다. 그 원소가 독립이므로 $U$도 독립이다.
-4. 따라서 모든 사슬에 상계를 만들 수 있으므로 극대 원소가 존재한다.
-5. Theorem 1.12를 적용하면 **모든 벡터공간은 기저를 갖는다.**
-
-**논리적 주의:** 이 존재 증명은 선택공리와 동치인 최대원리의 사용에 의존한다. 또한 여기서 말하는 기저는 **유한 선형결합을 사용하는 대수적(Hamel) 기저**이다. 무한급수·수렴을 전제로 하는 해석학적 기저와는 구별해야 한다. 마지막 문장은 후속 학습을 위한 보충 설명이다.
-
----
-
-## 2. 중요 정리 요약
-
-| 교재 번호 | 핵심 내용 | 역할 |
-|---|---|---|
-| 1.1 | 벡터 덧셈의 소거법칙 | 공리의 직접적 결과 |
-| 1.2 | 영스칼라와 역원 성질 | 연산의 기본 구조 |
-| 1.3 | 부분공간 판별법 | 새로운 공간의 검증 |
-| 1.4 | 부분공간의 교집합 | 구조 보존 |
-| 1.5 | Span의 최소성 | 생성 개념 |
-| 1.6 | 종속성의 확대 | 독립집합의 구조 |
-| 1.7 | 독립집합에 벡터 추가 | 독립 ↔ Span 연결 |
-| 1.8 | 기저 ↔ 유일한 표현 | 좌표의 정당화 |
-| 1.9 | 유한 생성집합에서 기저 추출 | 기저 존재(유한) |
-| **1.10** | **Replacement Theorem** | **차원이 잘 정의되는 핵심 근거** |
-| 1.11 | 부분공간의 차원 상한 | 차원의 비교 |
-| 1.12 | 극대 독립집합 ↔ 기저 | 무한차원 확장 |
-| 1.13 | 극대 독립집합의 존재 | 선택공리 기반 존재 |
-
-**가장 중요한 세 가지 연결:**
-
-$$
-\text{Subspace} \longleftarrow \operatorname{span}(S)
-$$
-
-$$
-\text{Basis} = \text{Spanning set}+\text{Linear independence}
-$$
-
-$$
-\text{Replacement Theorem}
-\Longrightarrow\text{dimension is basis-independent}.
-$$
-
----
-
-## 3. 발표 중 함께 풀 문제
-
-연습문제의 **주제와 번호는 교재를 기준으로** 하며, 아래 풀이·힌트는 발표를 위해 재구성했다.
-
-### 문제 A — 부분공간의 합집합 (§1.3, Exercise 19)
-
-$W_1,W_2$가 부분공간일 때 $W_1\cup W_2$가 부분공간이기 위한 필요충분조건은 $W_1\subseteq W_2$ 또는 $W_2\subseteq W_1$임을 보여라.
-
-**풀이.** 한쪽이 다른 쪽에 포함되면 합집합은 큰 쪽과 같으므로 부분공간이다. 반대로 둘 다 서로에 포함되지 않는다고 하면 $u\in W_1\setminus W_2$, $v\in W_2\setminus W_1$을 택할 수 있다. 합집합이 부분공간이면 $u+v$가 $W_1$ 또는 $W_2$에 속해야 한다. 첫 경우 $v=(u+v)-u\in W_1$이고, 둘째 경우 $u=(u+v)-v\in W_2$가 되어 각각 모순이다.
-
-### 문제 B — Span에 속하는가? (§1.4의 주제)
-
-$u=(1,0,1)$, $v=(0,1,1)$일 때 $w=(2,3,5)$와 $w'=(2,3,4)$ 중 어느 쪽이 $\operatorname{span}\{u,v\}$에 속하는가?
-
-**풀이.** $au+bv=(a,b,a+b)$이므로 $w=2u+3v$는 속하고 $w'$는 속하지 않는다.
-
-### 문제 C — 체에 따른 독립성 (§1.5, Exercise 8의 주제)
-
-$(1,1,0)$, $(1,0,1)$, $(0,1,1)$이 $\mathbb R$과 $\mathbb Z_2$에서 각각 독립인지 판단하라.
-
-**풀이.** $\mathbb R$에서는 행렬식 $-2\ne0$이므로 독립이다. $\mathbb Z_2$에서는 세 벡터의 합이 $0$이고 계수 $1,1,1$이 모두 영은 아니므로 종속이다.
-
-### 문제 D — 대칭 행렬의 차원 (§1.6, Theorem 1.11 이후의 예)
-
-대칭 $3\times3$ 실수행렬들의 집합은 몇 차원인가?
-
-**풀이.**
-
-$$
-\begin{pmatrix}
-a&b&c\\b&d&e\\c&e&f
-\end{pmatrix}
-$$
-
-로 나타낼 수 있으며 $a,b,c,d,e,f$가 독립적인 여섯 매개변수이므로 차원은 $6$이다.
-
-### 문제 E — 교체정리가 왜 필요한가? (§1.6, Theorem 1.10)
-
-서로 다른 기저들이 모두 같은 수의 벡터를 갖는다는 결론에서 **어느 단계에 유한차원 가정이 쓰이는지**, 또 기저의 **최소 생성성**과 **최대 독립성**을 설명해 보자.
-
----
-
-## 4. Discussion — 발표 중 다룰 질문
-
-- '벡터'가 화살표가 아닌 **함수 또는 확률분포**라면 벡터공간 공리를 어떻게 확인하는가?
-- 왜 $\varnothing$은 선형독립이며, 왜 $\{0\}$의 기저가 $\varnothing$인가?
-- Span을 계산하는 문제와 기저를 찾는 문제는 무엇이 다른가?
-- 좌표를 표현할 때 선택한 기저는 달라질 수 있는데, 왜 차원은 변하지 않는가?
-- 임의의 무한차원 공간에 대수적 기저가 존재한다는 것과, 그 기저를 **실제로 구성·계산**할 수 있다는 것은 왜 다른가?
-- **후속 학습 질문(교재 외):** 확률과정에서 쓰는 함수공간을 다룰 때 대수적 기저 외에 노름·내적·수렴 개념이 필요한 이유는 무엇인가?
-
-## 5. 발표 후 추가할 기록
-
-- **질문 및 토론 결과:** (미팅 후 작성)
-- **남은 미해결 문제:** (미팅 후 작성)
-- **추가로 확인할 정리나 연습문제:** (미팅 후 작성)
-
-## 6. References
-
-- Friedberg, S. H., Insel, A. J., & Spence, L. E. (2019). *Linear Algebra* (5th ed.). Pearson. **Chapter 1, pp. 1–63.**
-- §1.7은 교재에서 별표(*)로 표시된 **선택 단원**이다.
-- 해당 교재 PDF는 저작권 보호 자료이므로 Public 저장소에 업로드하지 않고, 이 노트에는 핵심 개념을 자체 서술했다.
+- Stephen H. Friedberg, Arnold J. Insel, Lawrence E. Spence, _Linear Algebra_, 5th Edition, Pearson (2019), Chapter 1 (pp. 1–63).
+- Paul R. Halmos, _Finite-Dimensional Vector Spaces_, Springer (1974).

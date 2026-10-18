@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 370" width="100%" height="100%">
+  <defs>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="520" height="370" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="260" y="34" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="bold" fill="#1e293b" text-anchor="middle">
+    Parallelogram Law &amp; Vector Addition
+  </text>
+
+  <!-- Axes -->
+  <line x1="40" y1="290" x2="450" y2="290" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+  <line x1="70" y1="330" x2="70" y2="55" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+  <text x="52" y="308" font-family="serif" font-style="italic" font-size="15" fill="#475569">O(0,0)</text>
+
+  <!-- Dashed parallelogram lines -->
+  <line x1="140" y1="140" x2="340" y2="100" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,5"/>
+  <line x1="270" y1="250" x2="340" y2="100" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,5"/>
+
+  <!-- Vector x -->
+  <line x1="70" y1="290" x2="138" y2="142" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  <text x="88" y="210" font-family="serif" font-style="italic" font-weight="bold" font-size="17" fill="#2563eb">x</text>
+  <text x="108" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#2563eb">(a₁, a₂)</text>
+
+  <!-- Vector y -->
+  <line x1="70" y1="290" x2="268" y2="252" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrow-teal)"/>
+  <text x="180" y="285" font-family="serif" font-style="italic" font-weight="bold" font-size="17" fill="#0d9488">y</text>
+  <text x="278" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#0d9488">(b₁, b₂)</text>
+
+  <!-- Vector x + y -->
+  <line x1="70" y1="290" x2="338" y2="102" stroke="#dc2626" stroke-width="2.8" marker-end="url(#arrow-red)"/>
+  <text x="190" y="180" font-family="serif" font-style="italic" font-weight="bold" font-size="17" fill="#dc2626">x + y</text>
+  <text x="348" y="98" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="13" fill="#dc2626">Q(a₁+b₁, a₂+b₂)</text>
+
+  <!-- Subtitle Note -->
+  <text x="260" y="348" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
+    평행사변형의 대각선으로 정의되는 기하학적 벡터 덧셈 x + y
+  </text>
+</svg>
